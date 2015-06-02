@@ -1,0 +1,23 @@
+{
+  "name": "synae-server",
+  "version": "0.0.0",
+  "description": "Rhizome-powered gestural audience participation",
+  "scripts": {
+    "css": "lessc frontend/style.less | autoprefixer > public/bundle.css",
+    "js": "browserify -t babelify frontend/index.js > public/bundle.js",
+    "server": "rhizome config.js",
+    "start": "npm run css && npm run js && npm run server",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Drew Petersen <senofpeter@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "autoprefixer": "^5.2.0",
+    "babelify": "^6.1.2",
+    "browserify": "^10.2.3",
+    "debug": "^2.2.0",
+    "less": "^2.5.1",
+    "rhizome-server": "^0.6.2",
+    "waaclock": "^0.5.2"
+  }
+}
