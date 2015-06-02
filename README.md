@@ -19,6 +19,9 @@ Running
 - `npm install`
 - `npm start`
 - visit `http://localhost:8080` (does nothing yet)
+- Debugging output can be activated with:
+  - browser: `localStorage.debug = '*'`
+  - node: `DEBUG=*`
 
 Inspiration / Shameless Stealing
 --------------------------------
