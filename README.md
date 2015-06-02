@@ -19,3 +19,9 @@ Running
 - `npm install`
 - `npm start`
 - visit `http://localhost:8080` (does nothing yet)
+
+Inspiration / Shameless Stealing
+--------------------------------
+
+- https://github.com/sebpiq/fields
+- https://github.com/sebpiq/rhizome
