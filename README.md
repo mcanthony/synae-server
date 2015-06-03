@@ -23,6 +23,14 @@ Running
   - browser: `localStorage.debug = '*'`
   - node: `DEBUG=*`
 
+Connect to the server in a web browser, click once, then run the following command:
+
+```
+$ DEBUG=* bin/send /tones
+```
+
+You should hear a note from a CMaj chord played on all connected devices!
+
 Inspiration / Shameless Stealing
 --------------------------------
 
