@@ -18,16 +18,12 @@ Running
 
 - `npm install`
 - `npm start`
-- visit `http://localhost:8080` (does nothing yet)
+- visit `http://localhost:8080`
+- Click once to activate the audio context
+- `$ DEBUG=* bin/send /tones` to tell all devices to play a note
 - Debugging output can be activated with:
   - browser: `localStorage.debug = '*'`
   - node: `DEBUG=*`
-
-Connect to the server in a web browser, click once, then run the following command:
-
-```
-$ DEBUG=* bin/send /tones
-```
 
 You should hear a note from a CMaj chord played on all connected devices!
 
