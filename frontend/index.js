@@ -1,8 +1,9 @@
+import './vendor/AudioContextMonkeyPatch';
 import debug from 'debug';
 import WAAClock from 'waaclock';
 import waakick from './waakick';
+import { Tone } from 'tone';
 
-import './vendor/AudioContextMonkeyPatch';
 
 let dbg = debug('synae-server:client');
 let dbgm = debug('synae-server:messages');
@@ -12,10 +13,15 @@ let dbgm = debug('synae-server:messages');
 // var rhizome = require('rhizome-server/lib/websockets/browser-main');
 // but that file still exposes rhizome as a global.
 
-window.addEventListener('click', function kicker() {
-  dbg('kicking')
+document.body.addEventListener('click', kicker, false);
+document.body.addEventListener('touchstart', kicker, false);
+
+function kicker(e) {
+  dbg('kicking');
+  e.target.removeEventListener('click', kicker, false);
+  e.target.removeEventListener('touchstart', kicker, false);
   init()
-}, false)
+}
 
 function init() {
 
@@ -33,6 +39,13 @@ function init() {
 
   let clock = new WAAClock(actx);
   clock.start();
+
+  console.log(Tone)
+
+  Tone.setContext(actx);
+  let synth = new Tone.MonoSynth();
+  synth.toMaster();
+  Tone.Transport.start();
 
   rhizome.start(function () {
     dbg('started', arguments);
@@ -55,7 +68,10 @@ function init() {
     dbgm(address, args);
     if (address === '/sys/subscribe') { return; }
     if (address === '/tones') {
-
+      var notes = ['C4', 'E4', 'G4'];
+      var note = notes[Math.floor(Math.random() * notes.length)];
+      dbg('triggering', note);
+      synth.triggerAttackRelease(note, '2n');
     }
   });
 }

@@ -1,0 +1,34 @@
+#!/usr/bin/env node
+
+var debug = require('debug')('synae-server:send');
+var rhizome = require('rhizome-server');
+var program = require('commander');
+
+program
+  .usage('[options] <path> [pathargs ...]')
+  .option('-t, --target <hostname>', 'Connect to rhizome server at [hostname], defaults to localhost', '127.0.0.1')
+  .option('-p, --port <port>', 'Connect to rhizome websocket server at [port], defaults to 8080', 8080)
+  .parse(process.argv)
+
+if (!program.args.length) {
+  program.help();
+}
+
+var msgAddress = program.args[0];
+var msgArgs = program.args.slice(1);
+
+var client = new rhizome.websockets.Client({
+  hostname: program.target,
+  port: program.port
+});
+
+client.start(function(err) {
+  if (err) throw err;
+  debug('started');
+})
+
+client.on('connected', function() {
+  debug('connected');
+  client.send(msgAddress, msgArgs);
+  client.stop(function () { debug('stopped'); });
+})

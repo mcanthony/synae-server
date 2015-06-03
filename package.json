@@ -15,9 +15,11 @@
     "autoprefixer": "^5.2.0",
     "babelify": "^6.1.2",
     "browserify": "^10.2.3",
+    "commander": "^2.8.1",
     "debug": "^2.2.0",
     "less": "^2.5.1",
     "rhizome-server": "^0.6.2",
+    "tone": "^0.4.2",
     "waaclock": "^0.5.2"
   }
 }
