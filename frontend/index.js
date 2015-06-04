@@ -4,6 +4,8 @@ import WAAClock from 'waaclock';
 import waakick from './waakick';
 import { Tone } from 'tone';
 
+import React from 'react/addons';
+import SectionChooser from './components/section-chooser.jsx';
 
 let dbg = debug('synae-server:client');
 let dbgm = debug('synae-server:messages');
@@ -16,11 +18,16 @@ let dbgm = debug('synae-server:messages');
 document.body.addEventListener('click', kicker, false);
 document.body.addEventListener('touchstart', kicker, false);
 
+React.render(
+  <SectionChooser audienceSections={['a', 'b', 'c']}/>,
+  document.body
+);
+
 function kicker(e) {
   dbg('kicking');
   e.target.removeEventListener('click', kicker, false);
   e.target.removeEventListener('touchstart', kicker, false);
-  init()
+  init();
 }
 
 function init() {

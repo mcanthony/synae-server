@@ -20,6 +20,7 @@
     "cssnext": "^1.6.0",
     "debug": "^2.2.0",
     "less": "^2.5.1",
+    "react": "^0.13.3",
     "rhizome-server": "^0.6.2",
     "tone": "^0.4.2",
     "waaclock": "^0.5.2"
