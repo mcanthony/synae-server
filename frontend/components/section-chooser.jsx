@@ -11,14 +11,16 @@ export default class SectionChooser extends React.Component {
           id,
           disabled: false
         }
-      })
+      }),
+      selectedSection: null
     }
   }
 
   handleSectionSelect(id, e) {
     this.state.audienceSections.forEach(s => s.disabled = true);
     this.setState({
-      audienceSections: this.state.audienceSections
+      audienceSections: this.state.audienceSections,
+      selectedSection: id
     });
     this.props.onSectionSelect(id)
   }
@@ -26,6 +28,7 @@ export default class SectionChooser extends React.Component {
   render() {
     let self = this;
     let sections = this.state.audienceSections;
+    let selectedSection = this.state.selectedSection;
     return (
       <div className="">
         <h1 className="px2">What Audience Section Are You?</h1>
@@ -36,7 +39,7 @@ export default class SectionChooser extends React.Component {
               key={p.id}
               type="button"
               disabled={p.disabled}
-              className="button button-big"
+              className={"button button-big " + (selectedSection === p.id ? 'black bg-yellow' : '')}
               onClick={self.handleSectionSelect.bind(self, p.id)}
               data-sectionid={p.id}
               >Section {p.id.toUpperCase()}</button>
