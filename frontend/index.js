@@ -44,9 +44,16 @@ function init(sectionId) {
   dbg(Tone)
 
   Tone.setContext(actx);
-  let synth = new Tone.PolySynth(6, Tone.MonoSynth);
-  synth.toMaster();
   Tone.Transport.start();
+
+  let instruments = {
+    mono: new Tone.MonoSynth
+  };
+  if (sectionId === 'a') instruments[sectionId] = new Tone.PolySynth(4, Tone.MonoSynth);
+  if (sectionId === 'b') instruments[sectionId] = new Tone.PolySynth(4, Tone.FMSynth);
+  if (sectionId === 'c') instruments[sectionId] = new Tone.PolySynth(4, Tone.DuoSynth);
+
+  Object.keys(instruments).forEach(k => instruments[k].toMaster());
 
   rhizome.start(function () {
     dbg('started', arguments);
@@ -73,20 +80,20 @@ function init(sectionId) {
 
     if (address === '/tones/all-note') {
       dbg('triggering');
-      synth.triggerAttackRelease('C3', '1n');
+      instruments.mono.triggerAttackRelease('C3', '1n');
     }
 
     if (address === '/tones/all-chord') {
       let notes = ['C3', 'D5', 'E4', 'G4'];
       let note = notes[Math.floor(Math.random() * notes.length)];
       dbg('triggering', note);
-      synth.triggerAttackRelease(note, '1n');
+      instruments.mono.triggerAttackRelease(note, '1n');
     }
 
     if (address === '/tones/section/' + sectionId) {
       args.forEach(note => {
         dbg('triggering', note);
-        synth.triggerAttackRelease(note, '1n', '+16n');
+        instruments[sectionId].triggerAttackRelease(note, '1n', '+16n');
       })
     }
   });
