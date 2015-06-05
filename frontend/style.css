@@ -1,8 +1,4 @@
 @import "basscss";
 
 html, body {
-  /* These are mostly temporary, just to get click events working easily */
-  width: 100%;
-  height: 100%;
-  cursor: pointer;
 }

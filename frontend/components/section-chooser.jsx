@@ -1,30 +1,48 @@
 import React from 'react/addons';
 
-/*export default React.createClass({
-  //displayName: 'SectionChooser',
-  render: function() {
-    let sections = this.props.audienceSections;
-    return (
-      <div>
-      <h1>What Audience Section Are You?</h1>
-      {sections.map(function(p) {
-        return (<a href="/section" key={p} className="button button-big">{p.toUpperCase()}</a>)
-      })}
-      </div>
-    )
-  }
-});*/
-
 export default class SectionChooser extends React.Component {
 
+  constructor(props) {
+    super(props);
+    this.handleSectionSelect = this.handleSectionSelect.bind(this);
+    this.state = {
+      audienceSections: props.audienceSections.map( id => {
+        return {
+          id,
+          disabled: false
+        }
+      })
+    }
+  }
+
+  handleSectionSelect(id, e) {
+    this.state.audienceSections.forEach(s => s.disabled = true);
+    this.setState({
+      audienceSections: this.state.audienceSections
+    });
+    this.props.onSectionSelect(id)
+  }
+
   render() {
-    let sections = this.props.audienceSections;
+    let self = this;
+    let sections = this.state.audienceSections;
     return (
-      <div>
-      <h1>What Audience Section Are You?</h1>
-      {sections.map(function(p) {
-        return (<a href="/section" key={p} className="button button-big">{p.toUpperCase()}</a>)
-      })}
+      <div className="">
+        <h1 className="px2">What Audience Section Are You?</h1>
+        <div className="flex flex-justify clearfix">
+        {sections.map(function(p) {
+          return (
+            <button
+              key={p.id}
+              type="button"
+              disabled={p.disabled}
+              className="button button-big"
+              onClick={self.handleSectionSelect.bind(self, p.id)}
+              data-sectionid={p.id}
+              >Section {p.id.toUpperCase()}</button>
+          )
+        })}
+        </div>
       </div>
     )
   }

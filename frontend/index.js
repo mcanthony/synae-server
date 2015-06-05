@@ -15,22 +15,16 @@ let dbgm = debug('synae-server:messages');
 // var rhizome = require('rhizome-server/lib/websockets/browser-main');
 // but that file still exposes rhizome as a global.
 
-document.body.addEventListener('click', kicker, false);
-document.body.addEventListener('touchstart', kicker, false);
+var audienceSections = ['a', 'b', 'c'];
 
 React.render(
-  <SectionChooser audienceSections={['a', 'b', 'c']}/>,
+  <SectionChooser audienceSections={audienceSections} onSectionSelect={init} />,
   document.body
 );
 
-function kicker(e) {
-  dbg('kicking');
-  e.target.removeEventListener('click', kicker, false);
-  e.target.removeEventListener('touchstart', kicker, false);
-  init();
-}
+function init(sectionId) {
 
-function init() {
+  dbg('sectionId?', sectionId);
 
   let actx;
 
@@ -47,10 +41,10 @@ function init() {
   let clock = new WAAClock(actx);
   clock.start();
 
-  console.log(Tone)
+  dbg(Tone)
 
   Tone.setContext(actx);
-  let synth = new Tone.MonoSynth();
+  let synth = new Tone.PolySynth(6, Tone.MonoSynth);
   synth.toMaster();
   Tone.Transport.start();
 
@@ -64,7 +58,9 @@ function init() {
 
   rhizome.on('connected', function() {
     dbg('connected');
-    rhizome.send('/sys/subscribe', ['/tones']);
+    rhizome.send('/sys/subscribe', ['/tones/all-note']);
+    rhizome.send('/sys/subscribe', ['/tones/all-chord']);
+    rhizome.send('/sys/subscribe', ['/tones/section/' + sectionId]);
   });
 
   rhizome.on('connection lost', function() {
@@ -74,11 +70,24 @@ function init() {
   rhizome.on('message', function(address, args) {
     dbgm(address, args);
     if (address === '/sys/subscribe') { return; }
-    if (address === '/tones') {
-      var notes = ['C4', 'E4', 'G4'];
-      var note = notes[Math.floor(Math.random() * notes.length)];
+
+    if (address === '/tones/all-note') {
+      dbg('triggering');
+      synth.triggerAttackRelease('C3', '1n');
+    }
+
+    if (address === '/tones/all-chord') {
+      let notes = ['C3', 'D5', 'E4', 'G4'];
+      let note = notes[Math.floor(Math.random() * notes.length)];
       dbg('triggering', note);
-      synth.triggerAttackRelease(note, '2n');
+      synth.triggerAttackRelease(note, '1n');
+    }
+
+    if (address === '/tones/section/' + sectionId) {
+      args.forEach(note => {
+        dbg('triggering', note);
+        synth.triggerAttackRelease(note, '1n', '+16n');
+      })
     }
   });
 }
