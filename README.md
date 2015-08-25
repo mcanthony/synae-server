@@ -27,6 +27,30 @@ Running
 
 You should hear a note from a CMaj chord played on all connected devices!
 
+Things Needed
+-------------
+
+- /conductor: performance admin panel
+- /: connect as an audience member
+- /
+
+Global Performance State:
+
+- valid audience sections
+- current audio world
+- connected clients
+
+Client Performance State:
+
+- which audience section
+- current audio world
+
+Client Data
+
+- world input mechanisms
+- what sample sets map to what audience sections (preconfigured?)
+
+
 Inspiration / Shameless Stealing
 --------------------------------
 

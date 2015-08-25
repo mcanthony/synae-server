@@ -4,7 +4,7 @@
   "description": "Rhizome-powered gestural-trigger spatial audience participation",
   "scripts": {
     "css": "cssnext frontend/style.css > public/bundle.css",
-    "js": "browserify -t babelify frontend/index.js > public/bundle.js",
+    "js": "browserify -d -t [babelify --stage 0 --sourceMapRelative . ] frontend/index.js > public/bundle.js",
     "server": "rhizome config.js",
     "start": "npm run css && npm run js && npm run server",
     "test": "echo \"Error: no test specified\" && exit 1"
