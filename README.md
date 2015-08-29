@@ -56,3 +56,4 @@ Inspiration / Shameless Stealing
 
 - https://github.com/sebpiq/fields
 - https://github.com/sebpiq/rhizome
+- http://funktion.fm/#post/rhizome-interactive-performances-and-network-topologies
