@@ -17,8 +17,49 @@ let dbgm = debug('synae-server:messages');
 
 var qs = querystring.parse(window.location.search.slice(1));
 
+var perfConfig = {
+  groups: [
+    {
+      id: 'group-a',
+      name: 'A',
+      sequences: [
+        { gesture: null },
+        { gesture: 'flutter', sample: '01.wav'}
+      ],
+      activeSequence: null
+    },
+    {
+      id: 'group-b',
+      name: 'B',
+      sequences: [
+        { gesture: null },
+        { gesture: 'swipe', sample: '02.wav'}
+      ],
+      activeSequence: null
+    },
+    {
+      id: 'group-c',
+      name: 'C',
+      sequences: [
+        { gesture: null },
+        { gesture: 'scratch', sample: '03.wav'}
+      ],
+      activeSequence: null
+    },
+    {
+      id: 'group-d',
+      name: 'D',
+      sequences: [
+        { gesture: null },
+        { gesture: 'pulse', sample: '04.wav'}
+      ],
+      activeSequence: null
+    }
+  ]
+}
+
 if ('conductor' in qs) {
-  React.render(<ConductorPanel rhizome={rhizome} />, document.body);
+  React.render(<ConductorPanel perfConfig={perfConfig} rhizome={rhizome} />, document.body);
 } else {
-  React.render(<AudiencePanel rhizome={rhizome} />, document.body);
+  React.render(<AudiencePanel perfConfig={perfConfig} rhizome={rhizome} />, document.body);
 }

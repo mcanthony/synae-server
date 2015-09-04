@@ -7,16 +7,10 @@ let dbgm = debug('synae-server:messages');
 export default class ConductorPanel extends React.Component {
 
   state = {
-    audioWorld: null
+    groups: this.props.perfConfig.groups
   }
 
   rhizome = this.props.rhizome;
-
-  onChangeAudioWorld = (e) => {
-    var action = e.target.getAttribute('data-action');
-    if (action === 'dec') this.setState({ audioWorld: --this.state.audioWorld });
-    if (action === 'inc') this.setState({ audioWorld: ++this.state.audioWorld });
-  }
 
   constructor(props) {
     super(props);
@@ -52,10 +46,28 @@ export default class ConductorPanel extends React.Component {
 
       if (address === '/broadcast/open/websockets') {
         // send current world state to client
-        this.rhizome.send('/client/' + args[0], ['this is world state... eventually']);
+        this.rhizome.send('/client/' + args[0], [JSON.stringify(this.state)]);
         return;
       }
     });
+  }
+
+  onEmitGroupSequenceChange = (e) => {
+    var action = e.target.getAttribute('data-action');
+    var groupId = e.target.getAttribute('data-groupid');
+    var add = action === 'dec' ? -1 : 1;
+    var state = this.state;
+    state.groups.forEach(g => {
+      if (g.id === groupId) {
+        // initial state is null
+        g.activeSequence = g.activeSequence !== null
+          ? g.activeSequence + add
+          : 0;
+        // Bounds check.
+        g.activeSequence = Math.min(Math.max(g.activeSequence, 0), g.sequences.length-1);
+      }
+    });
+    this.setState(state);
   }
 
   // TODO: make this only happen when a new client connects?
@@ -69,8 +81,28 @@ export default class ConductorPanel extends React.Component {
     return (
       <div className="conductor">
         <h1 className="px2">Conductor</h1>
-        <button name="audio-world-dec" onClick={this.onChangeAudioWorld} data-action="dec">- world</button>
-        <button name="audio-world-inc" onClick={this.onChangeAudioWorld} data-action="inc">+ world</button>
+
+        <div className="group-list">
+          {this.state.groups.map(g => {
+            let seq = g.activeSequence !== null
+              ? (g.sequences[g.activeSequence].gesture || '(silence)')
+              : '(no sequence)';
+
+            return (
+              <div className="group-info">
+                <h2>Group {g.name}: {seq}</h2>
+                <button name="group-sequence-dec"
+                  onClick={this.onEmitGroupSequenceChange}
+                  data-groupid={g.id}
+                  data-action="dec">Prev Sequence</button>
+                <button name="group-sequence-inc"
+                  onClick={this.onEmitGroupSequenceChange}
+                  data-groupid={g.id}
+                  data-action="inc">Next Sequence</button>
+              </div>
+            )
+          })}
+        </div>
       </div>
     )
   }
