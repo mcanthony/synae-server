@@ -2,7 +2,6 @@ import './vendor/AudioContextMonkeyPatch';
 import querystring from 'querystring';
 import debug from 'debug';
 
-
 import React from 'react/addons';
 import ConductorPanel from './components/conductor-panel.jsx';
 import AudiencePanel from './components/audience-panel.jsx';
@@ -26,7 +25,8 @@ var perfConfig = {
         { gesture: null },
         { gesture: 'flutter', sample: '01.wav'}
       ],
-      activeSequence: null
+      activeSequence: null,
+      clients: {}
     },
     {
       id: 'group-b',

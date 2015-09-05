@@ -14,7 +14,6 @@ export default class ConductorPanel extends React.Component {
 
   constructor(props) {
     super(props);
-    //setInterval(this.broadcastAudioWorld.bind(this), 500);
 
     this.rhizome.start(() => {
       dbg('started', arguments);
@@ -31,9 +30,7 @@ export default class ConductorPanel extends React.Component {
       this.rhizome.send('/sys/subscribe', ['/broadcast/open/websockets']);
 
       // Immediately send world state to resync in the event of a crash
-      // TODO
-
-
+      this.broadcastWorldState();
     });
 
     this.rhizome.on('connection lost', () => {
@@ -70,9 +67,14 @@ export default class ConductorPanel extends React.Component {
     this.setState(state);
   }
 
+  componentWillUpdate () {
+    // This might be a horrible idea.
+    this.broadcastWorldState();
+  }
+
   // TODO: make this only happen when a new client connects?
-  broadcastAudioWorld() {
-    this.props.rhizome.send('/audio-world', [this.state.audioWorld + '']);
+  broadcastWorldState () {
+    this.props.rhizome.send('/world-state', [JSON.stringify(this.state)]);
   }
 
   render() {
