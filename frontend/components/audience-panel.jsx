@@ -1,6 +1,5 @@
 import React from 'react/addons';
 import debug from 'debug';
-import waakick from '../waakick';
 import SectionChooser from './section-chooser.jsx';
 
 import FlutterGesture from './flutter-gesture.jsx';
@@ -17,39 +16,32 @@ const Gestures = {
 
 export default class AudiencePanel extends React.Component {
 
+  static propTypes = {
+    rsend: React.PropTypes.func.isRequired,
+    rrecv: React.PropTypes.func.isRequired,
+    rconnected: React.PropTypes.func.isRequired,
+    rid: React.PropTypes.string.isRequired
+  }
+
   state = {
     groupId: null,
     world: null
   }
 
-  rhizome = this.props.rhizome;
-
   constructor(props) {
     super(props);
 
-    this.rhizome.start(() => {
-      dbg('started', arguments);
+    // Shortcuts to rhizome callbacks
+    let {rsend, rrecv, rconnected, rhizome} = this.props;
+    Object.assign(this, {rsend, rrecv, rconnected, rhizome});
+
+    this.rconnected(() => {
+      this.rsend('/sys/subscribe', ['/world-state']);
+      this.rsend('/sys/subscribe', ['/client/' + this.props.rid]);
     });
 
-    this.rhizome.on('queued', () => {
-      dbg('server is full...');
-    });
-
-    this.rhizome.on('connected', () => {
-      dbg('connected');
-      this.rhizome.send('/sys/subscribe', ['/world-state']);
-      this.rhizome.send('/sys/subscribe', ['/client/' + this.rhizome.id]);
-    });
-
-    this.rhizome.on('connection lost', () => {
-      dbg('reconnecting...');
-    });
-
-    this.rhizome.on('message', (address, args) => {
-      dbgm(address, args);
-      if (address === '/sys/subscribed') { return; }
-
-      if (address === '/client/' + this.rhizome.id) {
+    this.rrecv((address, args) => {
+      if (address === '/client/' + this.props.rid) {
         this.setState({ world: JSON.parse(args[0]) });
       }
 
@@ -57,23 +49,6 @@ export default class AudiencePanel extends React.Component {
         this.setState({ world: JSON.parse(args[0]) });
       }
     });
-
-    let actx;
-
-    try {
-      actx = waakick();
-    } catch (e) {
-      return this.handleUnsupported(e);
-    }
-
-    if (!rhizome.isSupported()) {
-      return this.handleUnsupported(new Error('rhizome is not supported here'));
-    }
-  }
-
-  handleUnsupported(e) {
-    dbg(e);
-    alert('Failed to initialize something: ' + e.message);
   }
 
   onGroupSelect = (groupId) => {

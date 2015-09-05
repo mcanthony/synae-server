@@ -6,44 +6,35 @@ let dbgm = debug('synae-server:messages');
 
 export default class ConductorPanel extends React.Component {
 
+  static propTypes = {
+    rsend: React.PropTypes.func.isRequired,
+    rrecv: React.PropTypes.func.isRequired,
+    rconnected: React.PropTypes.func.isRequired
+  }
+
   state = {
     groups: this.props.perfConfig.groups
   }
 
-  rhizome = this.props.rhizome;
-
   constructor(props) {
     super(props);
 
-    this.rhizome.start(() => {
-      dbg('started', arguments);
-    });
+    // Shortcuts to rhizome callbacks
+    let {rsend, rrecv, rconnected} = this.props;
+    Object.assign(this, {rsend, rrecv, rconnected});
 
-    this.rhizome.on('queued', () => {
-      dbg('server is full...');
-    });
-
-    this.rhizome.on('connected', () => {
-      dbg('connected');
-
+    this.rconnected(() => {
       // Listen for new clients
-      this.rhizome.send('/sys/subscribe', ['/broadcast/open/websockets']);
+      this.rsend('/sys/subscribe', ['/broadcast/open/websockets']);
 
       // Immediately send world state to resync in the event of a crash
       this.broadcastWorldState();
     });
 
-    this.rhizome.on('connection lost', () => {
-      dbg('reconnecting...');
-    });
-
-    this.rhizome.on('message', (address, args) => {
-      dbgm(address, args);
-      //if (address === '/sys/subscribed') { return; }
-
+    this.rrecv((address, args) => {
       if (address === '/broadcast/open/websockets') {
         // send current world state to client
-        this.rhizome.send('/client/' + args[0], [JSON.stringify(this.state)]);
+        this.rsend('/client/' + args[0], [JSON.stringify(this.state)]);
         return;
       }
     });
@@ -74,7 +65,7 @@ export default class ConductorPanel extends React.Component {
 
   // TODO: make this only happen when a new client connects?
   broadcastWorldState () {
-    this.props.rhizome.send('/world-state', [JSON.stringify(this.state)]);
+    this.rsend('/world-state', [JSON.stringify(this.state)]);
   }
 
   render() {

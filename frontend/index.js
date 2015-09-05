@@ -1,8 +1,11 @@
 import './vendor/AudioContextMonkeyPatch';
+
 import querystring from 'querystring';
 import debug from 'debug';
-
 import React from 'react/addons';
+
+import waakick from './waakick';
+
 import ConductorPanel from './components/conductor-panel.jsx';
 import AudiencePanel from './components/audience-panel.jsx';
 
@@ -58,8 +61,64 @@ var perfConfig = {
   ]
 }
 
-if ('conductor' in qs) {
-  React.render(<ConductorPanel perfConfig={perfConfig} rhizome={rhizome} />, document.body);
-} else {
-  React.render(<AudiencePanel perfConfig={perfConfig} rhizome={rhizome} />, document.body);
+let actx;
+
+try {
+  actx = waakick();
+} catch (e) {
+  alert('Failed to initialize Web Audio' + e.message);
+  throw e;
+}
+
+if (!rhizome.isSupported()) {
+  let e = new Error('rhizome is not supported here');
+  alert(e.message);
+  throw e;
+}
+
+rhizome.start(() => {
+  dbg('started', rhizome.id, arguments);
+  initialize();
+});
+
+function initialize () {
+  if ('conductor' in qs) {
+    React.render(<ConductorPanel
+      perfConfig={perfConfig}
+      rsend={rhizome.send.bind(rhizome)}
+      rrecv={recv}
+      rconnected={connected} />, document.body);
+  } else {
+    React.render(<AudiencePanel
+      perfConfig={perfConfig}
+      rsend={rhizome.send.bind(rhizome)}
+      rrecv={recv}
+      rconnected={connected}
+      rid={rhizome.id} />, document.body);
+  }
+
+  // TODO: Probably need to pass this into at least the audience component.
+  // TODO: this listener might be in a race condition since it's added
+  // after `start`
+  rhizome.on('queued', () => {
+    dbg('server is full...');
+  });
+
+  rhizome.on('connection lost', () => {
+    dbg('reconnecting...');
+  });
+
+  function recv (cb) {
+    rhizome.on('message', (...args) => {
+      dbgm(...args);
+      cb(...args);
+    });
+  }
+
+  function connected (cb) {
+    rhizome.on('connected', (...args) => {
+      dbg('connected');
+      cb(...args);
+    });
+  }
 }
