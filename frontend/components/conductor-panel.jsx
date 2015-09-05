@@ -47,12 +47,8 @@ export default class ConductorPanel extends React.Component {
     var state = this.state;
     state.groups.forEach(g => {
       if (g.id === groupId) {
-        // initial state is null
-        g.activeSequence = g.activeSequence !== null
-          ? g.activeSequence + add
-          : 0;
         // Bounds check.
-        g.activeSequence = Math.min(Math.max(g.activeSequence, 0), g.sequences.length-1);
+        g.activeSequence = Math.min(Math.max(g.activeSequence + 1, 0), g.sequences.length-1);
       }
     });
     this.setState(state);
@@ -77,10 +73,7 @@ export default class ConductorPanel extends React.Component {
 
         <div className="group-list">
           {this.state.groups.map(g => {
-            let seq = g.activeSequence !== null
-              ? (g.sequences[g.activeSequence].gesture || '(silence)')
-              : '(no sequence)';
-
+            let seq = g.sequences[g.activeSequence].gesture;
             return (
               <div className="group-info">
                 <h2>Group {g.name}: {seq}</h2>

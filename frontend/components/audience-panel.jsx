@@ -2,7 +2,8 @@ import React from 'react/addons';
 import debug from 'debug';
 import SectionChooser from './section-chooser.jsx';
 
-import FlutterGesture from './flutter-gesture.jsx';
+import SilentInstrument from './silent-instrument.jsx';
+import FlutterInstrument from './flutter-instrument.jsx';
 //import FlutterGesture from './flutter-gesture.jsx';
 //import FlutterGesture from './flutter-gesture.jsx';
 //import FlutterGesture from './flutter-gesture.jsx';
@@ -10,8 +11,9 @@ import FlutterGesture from './flutter-gesture.jsx';
 let dbg = debug('synae-server:client');
 let dbgm = debug('synae-server:messages');
 
-const Gestures = {
-  'flutter': FlutterGesture
+const Instruments = {
+  'silent': SilentInstrument,
+  'flutter': FlutterInstrument
 }
 
 export default class AudiencePanel extends React.Component {
@@ -66,8 +68,8 @@ export default class AudiencePanel extends React.Component {
     let sequence = group
       ? group.sequences.filter((s, i) => i === group.activeSequence)[0]
       : null;
-    let Gesture = sequence
-      ? Gestures[sequence.gesture]
+    let Instrument = sequence
+      ? Instruments[sequence.gesture]
       : null;
 
     return (
@@ -77,7 +79,7 @@ export default class AudiencePanel extends React.Component {
           !hasWorldData
           ? <div>{syncing}</div>
           : group
-            ? <div>{ Gesture ? React.createElement(Gesture, { sample: sequence.sample }) : 'Listen Around You...' }</div>
+            ? <div><Instrument sample={sequence.sample} /></div>
             : <SectionChooser
               groups={this.state.world.groups}
               onGroupSelect={this.onGroupSelect} />

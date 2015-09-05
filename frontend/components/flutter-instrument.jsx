@@ -11,10 +11,16 @@ export default class extends React.Component {
   //  ...this.props
   //}
 
+  triggerSound () {
+    console.log('trigger!')
+  }
+
   render () {
     // I guess things go here to make a flutter happen?
     // This could just be 'gesture.jsx' with a big switch statement if the
     // gesture visualizations are mostly static.
-    return <div>{this.props.sample}</div>
+    return <div>
+      <button onClick={this.triggerSound}>CLICK ME</button>
+    </div>
   }
 }

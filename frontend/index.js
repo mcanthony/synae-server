@@ -25,38 +25,38 @@ var perfConfig = {
       id: 'group-a',
       name: 'A',
       sequences: [
-        { gesture: null },
+        { gesture: 'silent' },
         { gesture: 'flutter', sample: '01.wav'}
       ],
-      activeSequence: null,
+      activeSequence: 0,
       clients: {}
     },
     {
       id: 'group-b',
       name: 'B',
       sequences: [
-        { gesture: null },
+        { gesture: 'silent' },
         { gesture: 'swipe', sample: '02.wav'}
       ],
-      activeSequence: null
+      activeSequence: 0
     },
     {
       id: 'group-c',
       name: 'C',
       sequences: [
-        { gesture: null },
+        { gesture: 'silent' },
         { gesture: 'scratch', sample: '03.wav'}
       ],
-      activeSequence: null
+      activeSequence: 0
     },
     {
       id: 'group-d',
       name: 'D',
       sequences: [
-        { gesture: null },
+        { gesture: 'silent' },
         { gesture: 'pulse', sample: '04.wav'}
       ],
-      activeSequence: null
+      activeSequence: 0
     }
   ]
 }
