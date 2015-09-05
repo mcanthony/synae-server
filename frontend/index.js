@@ -82,19 +82,18 @@ rhizome.start(() => {
 });
 
 function initialize () {
+
+  let commonProps = {
+    perfConfig,
+    rsend: rhizome.send.bind(rhizome),
+    rrecv,
+    rconnected
+  };
+
   if ('conductor' in qs) {
-    React.render(<ConductorPanel
-      perfConfig={perfConfig}
-      rsend={rhizome.send.bind(rhizome)}
-      rrecv={recv}
-      rconnected={connected} />, document.body);
+    React.render(<ConductorPanel {...commonProps} />, document.body);
   } else {
-    React.render(<AudiencePanel
-      perfConfig={perfConfig}
-      rsend={rhizome.send.bind(rhizome)}
-      rrecv={recv}
-      rconnected={connected}
-      rid={rhizome.id} />, document.body);
+    React.render(<AudiencePanel {...commonProps} rid={rhizome.id} />, document.body);
   }
 
   // TODO: Probably need to pass this into at least the audience component.
@@ -108,14 +107,14 @@ function initialize () {
     dbg('reconnecting...');
   });
 
-  function recv (cb) {
+  function rrecv (cb) {
     rhizome.on('message', (...args) => {
       dbgm(...args);
       cb(...args);
     });
   }
 
-  function connected (cb) {
+  function rconnected (cb) {
     rhizome.on('connected', (...args) => {
       dbg('connected');
       cb(...args);
