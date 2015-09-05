@@ -4,7 +4,8 @@
   "description": "Rhizome-powered gestural-trigger spatial audience participation",
   "scripts": {
     "css": "cssnext frontend/style.css > public/bundle.css",
-    "js": "browserify -d -t [babelify --stage 0 --sourceMapRelative . ] frontend/index.js > public/bundle.js",
+    "js": "browserify -d -t [babelify --stage 0 --sourceMapRelative . ] frontend/index.js -o public/bundle.js",
+    "js-watch": "watchify -d -t [babelify --stage 0 --sourceMapRelative . ] frontend/index.js -o public/bundle.js -v",
     "server": "rhizome config.js",
     "start": "npm run css && npm run js && npm run server",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -24,5 +25,8 @@
     "rhizome-server": "^0.6.2",
     "tone": "^0.4.2",
     "waaclock": "^0.5.2"
+  },
+  "devDependencies": {
+    "watchify": "^3.4.0"
   }
 }
