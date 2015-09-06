@@ -1,5 +1,8 @@
+import debug from 'debug';
 import React from 'react/addons';
 import binaryXHR from 'binary-xhr';
+
+let dbg = debug('synae-server:instrument:flutter');
 
 export default class extends React.Component {
 
@@ -15,18 +18,24 @@ export default class extends React.Component {
 
   componentDidMount () {
     let {actx} = this.props;
+    this.gain = actx.createGain();
+    this.gain.connect(actx.destination);
+    this.gain.value = 1;
+
+    dbg(this.props.sample);
+
     binaryXHR(this.props.sample, (err, data) => {
       actx.decodeAudioData(data, buffer => {
         this.setState({ buffer });
       });
-    })
+    });
   }
 
   triggerSound = () => {
     let {actx} = this.props;
     let sample = actx.createBufferSource();
     sample.buffer = this.state.buffer;
-    sample.connect(actx.destination);
+    sample.connect(this.gain)
     sample.onended = () => { sample.disconnect(); }
     sample.start();
   }

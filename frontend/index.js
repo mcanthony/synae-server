@@ -1,4 +1,5 @@
 import './vendor/AudioContextMonkeyPatch';
+import objectAssign from 'object-assign';
 
 import querystring from 'querystring';
 import debug from 'debug';
@@ -8,6 +9,9 @@ import waakick from './waakick';
 
 import ConductorPanel from './components/conductor-panel.jsx';
 import AudiencePanel from './components/audience-panel.jsx';
+
+// polyfill
+Object.assign = Object.assign || objectAssign;
 
 let dbg = debug('synae-server:client');
 let dbgm = debug('synae-server:messages');
@@ -26,7 +30,7 @@ var perfConfig = {
       name: 'A',
       sequences: [
         { gesture: 'silent' },
-        { gesture: 'flutter', sample: 'audio/wav/01.wav'}
+        { gesture: 'flutter', sample: 'audio/mp3/01.mp3'}
       ],
       activeSequence: 0,
       clients: {}
@@ -36,7 +40,7 @@ var perfConfig = {
       name: 'B',
       sequences: [
         { gesture: 'silent' },
-        { gesture: 'swipe', sample: 'audio/wav/02.wav'}
+        { gesture: 'swipe', sample: 'audio/mp3/02.mp3'}
       ],
       activeSequence: 0
     },
@@ -45,7 +49,7 @@ var perfConfig = {
       name: 'C',
       sequences: [
         { gesture: 'silent' },
-        { gesture: 'scratch', sample: 'audio/wav/03.wav'}
+        { gesture: 'scratch', sample: 'audio/mp3/03.mp3'}
       ],
       activeSequence: 0
     },
@@ -54,7 +58,7 @@ var perfConfig = {
       name: 'D',
       sequences: [
         { gesture: 'silent' },
-        { gesture: 'pulse', sample: 'audio/wav/04.wav'}
+        { gesture: 'pulse', sample: 'audio/mp3/04.mp3'}
       ],
       activeSequence: 0
     }
