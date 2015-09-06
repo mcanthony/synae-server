@@ -19,6 +19,7 @@ const Instruments = {
 export default class AudiencePanel extends React.Component {
 
   static propTypes = {
+    actx: React.PropTypes.object.isRequired,
     rsend: React.PropTypes.func.isRequired,
     rrecv: React.PropTypes.func.isRequired,
     rconnected: React.PropTypes.func.isRequired,
@@ -79,7 +80,7 @@ export default class AudiencePanel extends React.Component {
           !hasWorldData
           ? <div>{syncing}</div>
           : group
-            ? <div><Instrument sample={sequence.sample} /></div>
+            ? <div><Instrument sample={sequence.sample} actx={this.props.actx} /></div>
             : <SectionChooser
               groups={this.state.world.groups}
               onGroupSelect={this.onGroupSelect} />

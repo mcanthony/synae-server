@@ -26,7 +26,7 @@ var perfConfig = {
       name: 'A',
       sequences: [
         { gesture: 'silent' },
-        { gesture: 'flutter', sample: '01.wav'}
+        { gesture: 'flutter', sample: 'audio/wav/01.wav'}
       ],
       activeSequence: 0,
       clients: {}
@@ -36,7 +36,7 @@ var perfConfig = {
       name: 'B',
       sequences: [
         { gesture: 'silent' },
-        { gesture: 'swipe', sample: '02.wav'}
+        { gesture: 'swipe', sample: 'audio/wav/02.wav'}
       ],
       activeSequence: 0
     },
@@ -45,7 +45,7 @@ var perfConfig = {
       name: 'C',
       sequences: [
         { gesture: 'silent' },
-        { gesture: 'scratch', sample: '03.wav'}
+        { gesture: 'scratch', sample: 'audio/wav/03.wav'}
       ],
       activeSequence: 0
     },
@@ -54,7 +54,7 @@ var perfConfig = {
       name: 'D',
       sequences: [
         { gesture: 'silent' },
-        { gesture: 'pulse', sample: '04.wav'}
+        { gesture: 'pulse', sample: 'audio/wav/04.wav'}
       ],
       activeSequence: 0
     }
@@ -76,6 +76,8 @@ if (!rhizome.isSupported()) {
   throw e;
 }
 
+// TODO: probably need to do an audio format check here as well...
+
 rhizome.start(() => {
   dbg('started', rhizome.id, arguments);
   initialize();
@@ -84,6 +86,7 @@ rhizome.start(() => {
 function initialize () {
 
   let commonProps = {
+    actx,
     perfConfig,
     rsend: rhizome.send.bind(rhizome),
     rrecv,

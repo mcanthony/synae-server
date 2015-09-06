@@ -1,18 +1,34 @@
 import React from 'react/addons';
+import binaryXHR from 'binary-xhr';
 
 export default class extends React.Component {
 
   static propTypes = {
-    sample: React.PropTypes.string.isRequired,
-    silence: React.PropTypes.func.isRequired
+    actx: React.PropTypes.object.isRequired,
+    sample: React.PropTypes.string.isRequired
   }
 
-  //state = {
-  //  ...this.props
-  //}
+  state = {
+    buffer: null,
+    silenced: false
+  }
 
-  triggerSound () {
-    console.log('trigger!')
+  componentDidMount () {
+    let {actx} = this.props;
+    binaryXHR(this.props.sample, (err, data) => {
+      actx.decodeAudioData(data, buffer => {
+        this.setState({ buffer });
+      });
+    })
+  }
+
+  triggerSound = () => {
+    let {actx} = this.props;
+    let sample = actx.createBufferSource();
+    sample.buffer = this.state.buffer;
+    sample.connect(actx.destination);
+    sample.onended = () => { sample.disconnect(); }
+    sample.start();
   }
 
   render () {
@@ -20,7 +36,9 @@ export default class extends React.Component {
     // This could just be 'gesture.jsx' with a big switch statement if the
     // gesture visualizations are mostly static.
     return <div>
-      <button onClick={this.triggerSound}>CLICK ME</button>
+      <button
+        disabled={!this.state.buffer}
+        onClick={this.triggerSound}>CLICK ME</button>
     </div>
   }
 }
