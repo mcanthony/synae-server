@@ -27,14 +27,16 @@ export default class extends React.Component {
       if (motions.length > 10) motions.pop();
 
       let xs = motions.map(e => e.acceleration.x);
-      let dtw = new DTW();
-
-      let shakeCost = dtw.compute(xs, [-20, 0, 20, 0]);
-      let stillCost = dtw.compute(xs, [0, 0, 0, 0]);
+      let shakeDTW = new DTW();
+      let stillDTW = new DTW();
+      let shakeCost = shakeDTW.compute(xs, [-20, 0, 20, 0]);
+      let stillCost = stillDTW.compute(xs, [0, 0, 0, 0]);
 
       if (shakeCost < stillCost) {
         dbg('dm cost: shake', shakeCost);
         dbg('dm cost: still', stillCost);
+        //dbg('dm path: shake', shakeDTW.path());
+        //dbg('dm path: still', stillDTW.path());
         this.triggerSound();
       }
     });
