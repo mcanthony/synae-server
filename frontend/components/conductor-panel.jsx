@@ -48,7 +48,7 @@ export default class ConductorPanel extends React.Component {
     state.groups.forEach(g => {
       if (g.id === groupId) {
         // Bounds check.
-        g.activeSequence = Math.min(Math.max(g.activeSequence + 1, 0), g.sequences.length-1);
+        g.activeSequence = Math.min(Math.max(g.activeSequence + add, 0), g.sequences.length-1);
       }
     });
     this.setState(state);

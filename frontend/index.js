@@ -6,7 +6,6 @@ import debug from 'debug';
 import React from 'react/addons';
 
 import waakick from './waakick';
-
 import ConductorPanel from './components/conductor-panel.jsx';
 import AudiencePanel from './components/audience-panel.jsx';
 
@@ -65,10 +64,9 @@ var perfConfig = {
   ]
 }
 
-let actx;
-
 try {
-  actx = waakick();
+  // This is simply to test for support, not to actually kick.
+  dbg('waa', waakick());
 } catch (e) {
   alert('Failed to initialize Web Audio' + e.message);
   throw e;
@@ -83,24 +81,25 @@ if (!rhizome.isSupported()) {
 // TODO: probably need to do an audio format check here as well...
 
 rhizome.start(() => {
-  dbg('started', rhizome.id, arguments);
+  dbg('started', rhizome.id);
   initialize();
 });
 
 function initialize () {
 
   let commonProps = {
-    actx,
     perfConfig,
     rsend: rhizome.send.bind(rhizome),
     rrecv,
     rconnected
   };
 
+  let root = document.querySelector('.react-root');
+
   if ('conductor' in qs) {
-    React.render(<ConductorPanel {...commonProps} />, document.body);
+    React.render(<ConductorPanel {...commonProps} />, root);
   } else {
-    React.render(<AudiencePanel {...commonProps} rid={rhizome.id} />, document.body);
+    React.render(<AudiencePanel {...commonProps} rid={rhizome.id} />, root);
   }
 
   // TODO: Probably need to pass this into at least the audience component.

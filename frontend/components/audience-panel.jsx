@@ -2,6 +2,7 @@ import React from 'react/addons';
 import debug from 'debug';
 import SectionChooser from './section-chooser.jsx';
 
+import waakick from '../waakick';
 import SilentInstrument from './silent-instrument.jsx';
 import FlutterInstrument from './flutter-instrument.jsx';
 //import FlutterGesture from './flutter-gesture.jsx';
@@ -9,7 +10,6 @@ import FlutterInstrument from './flutter-instrument.jsx';
 //import FlutterGesture from './flutter-gesture.jsx';
 
 let dbg = debug('synae-server:client');
-let dbgm = debug('synae-server:messages');
 
 const Instruments = {
   'silent': SilentInstrument,
@@ -19,7 +19,6 @@ const Instruments = {
 export default class AudiencePanel extends React.Component {
 
   static propTypes = {
-    actx: React.PropTypes.object.isRequired,
     rsend: React.PropTypes.func.isRequired,
     rrecv: React.PropTypes.func.isRequired,
     rconnected: React.PropTypes.func.isRequired,
@@ -28,7 +27,8 @@ export default class AudiencePanel extends React.Component {
 
   state = {
     groupId: null,
-    world: null
+    world: null,
+    actx: null
   }
 
   constructor(props) {
@@ -38,6 +38,9 @@ export default class AudiencePanel extends React.Component {
     let {rsend, rrecv, rconnected, rhizome} = this.props;
     Object.assign(this, {rsend, rrecv, rconnected, rhizome});
 
+    // TODO: there is a race condition here where the conductor is notified
+    // of a new client before this subscription is successful, resulting in
+    // the audience never receiving the world state.
     this.rconnected(() => {
       this.rsend('/sys/subscribe', ['/world-state']);
       this.rsend('/sys/subscribe', ['/client/' + this.props.rid]);
@@ -54,12 +57,23 @@ export default class AudiencePanel extends React.Component {
     });
   }
 
+  kickWebAudio = () => {
+    dbg('waakick');
+    this.setState({ actx: waakick() });
+  }
+
   onGroupSelect = (groupId) => {
     this.setState({ ...this.state, groupId });
     // TODO: tell the server? just for visualization purposes
   }
 
   render() {
+    let hasKickedAudio = !!this.state.actx;
+
+    if (!hasKickedAudio) return <div>
+      <button onClick={this.kickWebAudio}>Join!</button>
+    </div>
+
     let self = this;
     let hasWorldData = !!this.state.world;
     let syncing = !hasWorldData ? 'Waiting for Conductor...' : null;
@@ -80,7 +94,7 @@ export default class AudiencePanel extends React.Component {
           !hasWorldData
           ? <div>{syncing}</div>
           : group
-            ? <div><Instrument sample={sequence.sample} actx={this.props.actx} /></div>
+            ? <div><Instrument sample={sequence.sample} actx={this.state.actx} /></div>
             : <SectionChooser
               groups={this.state.world.groups}
               onGroupSelect={this.onGroupSelect} />

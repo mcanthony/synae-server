@@ -1,6 +1,8 @@
 import debug from 'debug';
 import React from 'react/addons';
 import binaryXHR from 'binary-xhr';
+import devicemotion from '../devicemotion';
+import DTW from 'dtw';
 
 let dbg = debug('synae-server:instrument:flutter');
 
@@ -12,11 +14,31 @@ export default class extends React.Component {
   }
 
   state = {
-    buffer: null,
-    silenced: false
+    buffer: null
   }
 
+  motions = [];
+
   componentDidMount () {
+
+    this.disconnectDeviceMotion = devicemotion((e) => {
+      let { motions } = this;
+      motions.unshift(e);
+      if (motions.length > 10) motions.pop();
+
+      let xs = motions.map(e => e.acceleration.x);
+      let dtw = new DTW();
+
+      let shakeCost = dtw.compute(xs, [-20, 0, 20, 0]);
+      let stillCost = dtw.compute(xs, [0, 0, 0, 0]);
+
+      if (shakeCost < stillCost) {
+        dbg('dm cost: shake', shakeCost);
+        dbg('dm cost: still', stillCost);
+        this.triggerSound();
+      }
+    });
+
     let {actx} = this.props;
     this.gain = actx.createGain();
     this.gain.connect(actx.destination);
@@ -31,6 +53,10 @@ export default class extends React.Component {
     });
   }
 
+  componentWillUnmount () {
+    this.disconnectDeviceMotion();
+  }
+
   triggerSound = () => {
     let {actx} = this.props;
     let sample = actx.createBufferSource();
@@ -41,13 +67,10 @@ export default class extends React.Component {
   }
 
   render () {
-    // I guess things go here to make a flutter happen?
-    // This could just be 'gesture.jsx' with a big switch statement if the
-    // gesture visualizations are mostly static.
-    return <div>
-      <button
-        disabled={!this.state.buffer}
-        onClick={this.triggerSound}>CLICK ME</button>
-    </div>
+    return this.state.buffer
+      ? <div>
+          <p>Turn up your volume, and turn any silent switches to OFF</p>
+        </div>
+      : <div>Fetching...</div>
   }
 }
