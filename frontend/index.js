@@ -29,9 +29,9 @@ var perfConfig = {
       id: 'group-a',
       name: 'A',
       sequences: [
-        { gesture: 'flutter', 'audio/mp3/Section_1_Group_1_flutter.mp3', instructions: 'Shake phone when you hear agitation in the piano.'},
-        { gesture: 'flutter', 'audio/mp3/Section_1_Group_1_flutter.mp3', instructions: 'When you hear someone else\'s shake, wait two beats then shake.'},
-        { gesture: 'tickle',  'audio/mp3/Section_1_Group_1_flutter.mp3', instructions: 'Tickle screen\'s bubbles whenever you grandly exhale.'}
+        { gesture: 'flutter', sample: 'audio/mp3/Section_1_Group_1_flutter.mp3', instructions: 'Shake phone when you hear agitation in the piano.'},
+        { gesture: 'flutter', sample: 'audio/mp3/Section_1_Group_1_flutter.mp3', instructions: 'When you hear someone else\'s shake, wait two beats then shake.'},
+        { gesture: 'tickle',  sample: 'audio/mp3/Section_2_Group_1_blowing_bubbles.mp3', instructions: 'Tickle screen\'s bubbles whenever you grandly exhale.'}
       ],
       activeSequence: 0
     },
