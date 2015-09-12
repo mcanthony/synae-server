@@ -1,16 +1,48 @@
 import React from 'react/addons';
 import d3 from 'd3';
+import binaryXHR from 'binary-xhr';
 
 var MAX_NODES = 20;
 var GRAVITY = 0.02;
 var CHARGE = -90;
 var RADIUS = 35;
+var buffer;
 
 export default class extends React.Component {
+
+  static propTypes = {
+    actx: React.PropTypes.object.isRequired,
+    sample: React.PropTypes.string.isRequired,
+    instructions: React.PropTypes.string.isRequired
+  }
+
+  state = {
+    isLoading : true
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    return !nextState.isLoading;
+  }
+
   componentDidMount() {
+    let {actx} = this.props;
+    this.gain = actx.createGain();
+    this.gain.connect(actx.destination);
+    this.gain.value = 1;
+
+    binaryXHR(this.props.sample, (err, data) => {
+      actx.decodeAudioData(data, b => {
+        buffer = b;
+        this.setState({ isLoading: false });
+      });
+    });
+  }
+
+  componentDidUpdate() {
     var mount = React.findDOMNode(this);
     var width = mount.getBoundingClientRect().width;
     var height = mount.getBoundingClientRect().height;
+    var me = this;
     var bubbles = [];
     var interval;
     var svg;
@@ -30,6 +62,7 @@ export default class extends React.Component {
         bubble.y += (Math.random() * 120 - 60);
       })
 
+      me.playSound();
       sim.resume();
     }
 
@@ -45,9 +78,6 @@ export default class extends React.Component {
       .charge(CHARGE)
       .size([width, height])
       .on('tick', tick);
-
-    // d3nodes = svg.selectAll('.bubble')
-    //   .data(bubbles);
 
     interval = setInterval(() => {
       bubbles.push({id: bubbles.length});
@@ -67,7 +97,15 @@ export default class extends React.Component {
         clearInterval(interval);
       }
     })
+  }
 
+  playSound() {
+    let {actx} = this.props;
+    let sample = actx.createBufferSource();
+    sample.buffer = buffer;
+    sample.connect(this.gain)
+    sample.onended = () => { sample.disconnect(); }
+    sample.start();
   }
 
   render() {
