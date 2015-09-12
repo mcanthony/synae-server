@@ -29,9 +29,9 @@ var perfConfig = {
       id: 'group-a',
       name: 'A',
       sequences: [
-        { gesture: 'flutter', sample: 'audio/mp3/01.mp3', instructions: 'Shake phone when you hear agitation in the piano.'},
-        { gesture: 'flutter', sample: 'audio/mp3/01.mp3', instructions: 'When you hear someone else\'s shake, wait two beats then shake.'},
-        { gesture: 'tickle',  sample: 'audio/mp3/01.mp3', instructions: 'Tickle screen\'s bubbles whenever you grandly exhale.'}
+        { gesture: 'flutter', 'audio/mp3/Section_1_Group_1_flutter.mp3', instructions: 'Shake phone when you hear agitation in the piano.'},
+        { gesture: 'flutter', 'audio/mp3/Section_1_Group_1_flutter.mp3', instructions: 'When you hear someone else\'s shake, wait two beats then shake.'},
+        { gesture: 'tickle',  'audio/mp3/Section_1_Group_1_flutter.mp3', instructions: 'Tickle screen\'s bubbles whenever you grandly exhale.'}
       ],
       activeSequence: 0
     },
@@ -40,7 +40,7 @@ var perfConfig = {
       name: 'B',
       sequences: [
         { gesture: 'silent', instructions: 'Be still.' },
-        { gesture: 'slash', sample: 'audio/mp3/02.mp3', instructions: 'Slash downwards when you hear fluttering.'}
+        { gesture: 'slash', sample: 'audio/mp3/Section_1_Group_2_String_Swipe.mp3', instructions: 'Slash downwards when you hear fluttering.'}
       ],
       activeSequence: 0
     },
@@ -49,7 +49,7 @@ var perfConfig = {
       name: 'C',
       sequences: [
         { gesture: 'silent' },
-        { gesture: 'scratch', sample: 'audio/mp3/03.mp3'}
+        { gesture: 'scratch', sample: 'audio/mp3/Section_1_Group_3_String_Drag.mp3'}
       ],
       activeSequence: 0
     },
@@ -58,7 +58,7 @@ var perfConfig = {
       name: 'D',
       sequences: [
         { gesture: 'silent' },
-        { gesture: 'pulse', sample: 'audio/mp3/04.mp3'}
+        { gesture: 'pulse', sample: 'audio/mp3/Section_1_Group_4_Whisper_bells.mp3'}
       ],
       activeSequence: 0
     }
