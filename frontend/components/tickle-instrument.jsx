@@ -3,9 +3,9 @@ import d3 from 'd3';
 import binaryXHR from 'binary-xhr';
 
 var MAX_NODES = 20;
-var GRAVITY = 0.02;
-var CHARGE = -90;
-var RADIUS = 35;
+var GRAVITY = 0.03;
+var CHARGE = -30;
+var RADIUS = 20;
 var DT = 500;
 var buffer;
 
@@ -57,10 +57,10 @@ export default class extends React.Component {
         .attr('cy', d => d.y)
     }
 
-    function bounce() {
+    function bounce(ev) {
       bubbles.forEach(bubble => {
-        bubble.x += (Math.random() * 120 - 60);
-        bubble.y += (Math.random() * 120 - 60);
+        bubble.x += (Math.random() * 60 - 30);
+        bubble.y += (Math.random() * 60 - 30);
       })
 
       me.playSound();
@@ -70,7 +70,7 @@ export default class extends React.Component {
     svg = d3.select('.tickle-svg')
       .attr('width', width)
       .attr('height', height)
-      .on('mousedown', bounce)
+      // .on('mousedown', bounce)
       .on('touchstart', bounce);
 
     sim = d3.layout.force()
