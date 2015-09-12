@@ -6,6 +6,7 @@ var MAX_NODES = 20;
 var GRAVITY = 0.02;
 var CHARGE = -90;
 var RADIUS = 35;
+var DT = 500;
 var buffer;
 
 export default class extends React.Component {
@@ -90,13 +91,17 @@ export default class extends React.Component {
         .attr('class', 'bubble')
         .attr('cx', d => d.x)
         .attr('cy', d => d.y)
-        .attr('r', RADIUS)
-        .style('fill', 'skyblue');
+        .attr('r', 0)
+        .style('fill', 'skyblue')
+        .transition()
+        .duration(350)
+        .ease('bounce')
+        .attr('r', RADIUS);
 
       if (bubbles.length >= MAX_NODES) {
         clearInterval(interval);
       }
-    })
+    }, DT)
   }
 
   playSound() {
