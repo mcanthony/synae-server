@@ -5,6 +5,7 @@ import SectionChooser from './section-chooser.jsx';
 import waakick from '../waakick';
 import SilentInstrument from './silent-instrument.jsx';
 import FlutterInstrument from './flutter-instrument.jsx';
+import SlashInstrument from './slash-instrument.jsx';
 //import FlutterGesture from './flutter-gesture.jsx';
 //import FlutterGesture from './flutter-gesture.jsx';
 //import FlutterGesture from './flutter-gesture.jsx';
@@ -13,7 +14,8 @@ let dbg = debug('synae-server:client');
 
 const Instruments = {
   'silent': SilentInstrument,
-  'flutter': FlutterInstrument
+  'flutter': FlutterInstrument,
+  'slash': SlashInstrument
 }
 
 export default class AudiencePanel extends React.Component {
@@ -71,7 +73,7 @@ export default class AudiencePanel extends React.Component {
     let hasKickedAudio = !!this.state.actx;
 
     if (!hasKickedAudio) return <div>
-      <button onClick={this.kickWebAudio}>Join!</button>
+      <button className='button button-big' onClick={this.kickWebAudio}>Join!</button>
     </div>
 
     let self = this;
@@ -94,7 +96,10 @@ export default class AudiencePanel extends React.Component {
           !hasWorldData
           ? <div>{syncing}</div>
           : group
-            ? <div><Instrument sample={sequence.sample} actx={this.state.actx} /></div>
+            ? <div><Instrument
+              sample={sequence.sample}
+              instructions={sequence.instructions}
+              actx={this.state.actx} /></div>
             : <SectionChooser
               groups={this.state.world.groups}
               onGroupSelect={this.onGroupSelect} />

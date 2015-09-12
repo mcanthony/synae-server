@@ -10,7 +10,8 @@ export default class extends React.Component {
 
   static propTypes = {
     actx: React.PropTypes.object.isRequired,
-    sample: React.PropTypes.string.isRequired
+    sample: React.PropTypes.string.isRequired,
+    instructions: React.PropTypes.string.isRequired
   }
 
   state = {
@@ -71,7 +72,8 @@ export default class extends React.Component {
   render () {
     return this.state.buffer
       ? <div>
-          <p>Turn up your volume, and turn any silent switches to OFF</p>
+          <p>(Turn up your volume, and turn any silent switches to OFF)</p>
+          <p>{this.props.instructions}</p>
         </div>
       : <div>Fetching...</div>
   }

@@ -12,6 +12,6 @@ export default class extends React.Component {
   //}
 
   render () {
-    return <div>Listen around you for now...</div>
+    return <div>{this.props.instructions}</div>
   }
 }

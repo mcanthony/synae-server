@@ -8,6 +8,7 @@ import React from 'react/addons';
 import waakick from './waakick';
 import ConductorPanel from './components/conductor-panel.jsx';
 import AudiencePanel from './components/audience-panel.jsx';
+import GestureRecordPanel from './components/gesturerecord-panel.jsx';
 
 // polyfill
 Object.assign = Object.assign || objectAssign;
@@ -28,18 +29,17 @@ var perfConfig = {
       id: 'group-a',
       name: 'A',
       sequences: [
-        { gesture: 'silent' },
-        { gesture: 'flutter', sample: 'audio/mp3/01.mp3'}
+        { gesture: 'flutter', sample: 'audio/mp3/01.mp3', instructions: 'Shake phone when you hear agitation in the piano.'},
+        { gesture: 'flutter', sample: 'audio/mp3/01.mp3', instructions: 'When you hear someone else\'s shake, wait two beats then shake.'}
       ],
-      activeSequence: 0,
-      clients: {}
+      activeSequence: 0
     },
     {
       id: 'group-b',
       name: 'B',
       sequences: [
-        { gesture: 'silent' },
-        { gesture: 'swipe', sample: 'audio/mp3/02.mp3'}
+        { gesture: 'silent', instructions: 'Be still.' },
+        { gesture: 'slash', sample: 'audio/mp3/02.mp3', instructions: 'Slash downwards when you hear fluttering.'}
       ],
       activeSequence: 0
     },
@@ -94,10 +94,13 @@ function initialize () {
     rconnected
   };
 
+  React.initializeTouchEvents(true);
   let root = document.querySelector('.react-root');
 
   if ('conductor' in qs) {
     React.render(<ConductorPanel {...commonProps} />, root);
+  } else if ('gesturedebug' in qs) {
+    React.render(<GestureRecordPanel />, root);
   } else {
     React.render(<AudiencePanel {...commonProps} rid={rhizome.id} />, root);
   }
