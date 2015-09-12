@@ -6,6 +6,7 @@ import waakick from '../waakick';
 import SilentInstrument from './silent-instrument.jsx';
 import FlutterInstrument from './flutter-instrument.jsx';
 import SlashInstrument from './slash-instrument.jsx';
+import TickleInstrument from './tickle-instrument.jsx';
 //import FlutterGesture from './flutter-gesture.jsx';
 //import FlutterGesture from './flutter-gesture.jsx';
 //import FlutterGesture from './flutter-gesture.jsx';
@@ -15,7 +16,8 @@ let dbg = debug('synae-server:client');
 const Instruments = {
   'silent': SilentInstrument,
   'flutter': FlutterInstrument,
-  'slash': SlashInstrument
+  'slash': SlashInstrument,
+  'tickle': TickleInstrument
 }
 
 export default class AudiencePanel extends React.Component {
@@ -91,7 +93,6 @@ export default class AudiencePanel extends React.Component {
 
     return (
       <div className="audience">
-        <h1 className="px2">Audience</h1>
         {
           !hasWorldData
           ? <div>{syncing}</div>

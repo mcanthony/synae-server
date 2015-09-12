@@ -30,7 +30,8 @@ var perfConfig = {
       name: 'A',
       sequences: [
         { gesture: 'flutter', sample: 'audio/mp3/01.mp3', instructions: 'Shake phone when you hear agitation in the piano.'},
-        { gesture: 'flutter', sample: 'audio/mp3/01.mp3', instructions: 'When you hear someone else\'s shake, wait two beats then shake.'}
+        { gesture: 'flutter', sample: 'audio/mp3/01.mp3', instructions: 'When you hear someone else\'s shake, wait two beats then shake.'},
+        { gesture: 'tickle',  sample: 'audio/mp3/01.mp3', instructions: 'Tickle screen\'s bubbles whenever you grandly exhale.'}
       ],
       activeSequence: 0
     },
