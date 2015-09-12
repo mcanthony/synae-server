@@ -18,7 +18,6 @@ export default class extends React.Component {
     buffer: null
   }
 
-  isPlaying = false;
   motions = [];
 
   componentDidMount () {
@@ -52,7 +51,9 @@ export default class extends React.Component {
       if (slashCost < stillCost) {
         dbg('dm cost: slash', slashCost);
         dbg('dm cost: still', stillCost);
-        if (!this.isPlaying) this.triggerSound();
+        this.triggerSound();
+        // blank out to prevent immediate subsequent matches, hopefully?
+        motions.length = 0;
       }
     });
 
@@ -79,18 +80,8 @@ export default class extends React.Component {
     let sample = actx.createBufferSource();
     sample.buffer = this.state.buffer;
     sample.connect(this.gain)
-    sample.onended = () => {
-      dbg('sample onended fired');
-    }
-    dbg('buffer duration', this.state.buffer.duration);
-    // For some reason .onended was not firing after 2 or so samples were created.
-    setTimeout(() => {
-      sample.disconnect();
-      this.isPlaying = false;
-      dbg('sample timeout fired');
-    }, (this.state.buffer.duration+1) * 1000);
+    sample.onended = () => { sample.disconnect(); }
     sample.start();
-    this.isPlaying = true;
   }
 
   render () {
