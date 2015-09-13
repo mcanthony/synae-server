@@ -6,6 +6,7 @@ import complimentaryFilter from '../complimentary-filter';
 import DTW from 'dtw';
 import dtwSum from '../dtw-sum';
 import motionsToAccelSeries from '../motions-to-accelseries';
+import asciiDTWPath from '../ascii-dtw-path';
 
 let dbg = debug('synae-server:instrument:reach');
 
@@ -56,11 +57,15 @@ export default class extends React.Component {
         motions.length = 0;
         let dtw;
         dtw = new DTW();
-        dtw.compute(timeseries.y, recordedTime.y)
-        dbg('dtw gesture path', JSON.stringify(dtw.path()));
+        dtw.compute(timeseries.y, recordedTime.y, timeseries.length * 0.1)
+        let gesturePath = dtw.path();
+        dbg('\n' + asciiDTWPath(gesturePath, timeseries.y.length, recordedTime.y.length));
+        dbg('dtw gesture path', JSON.stringify(gesturePath));
         dtw = new DTW();
-        dtw.compute(timeseries.y, still)
-        dbg('dtw still path', JSON.stringify(dtw.path()));
+        dtw.compute(timeseries.y, still, timeseries.length * 0.1)
+        let stillPath = dtw.path();
+        dbg('\n' + asciiDTWPath(stillPath, timeseries.y.length, recordedTime.y.length));
+        dbg('dtw still path', JSON.stringify(stillPath));
       }
     });
 
