@@ -39,6 +39,7 @@ export default class extends React.Component {
         //dbg('dm path: shake', shakeDTW.path());
         //dbg('dm path: still', stillDTW.path());
         this.triggerSound();
+        motions.length = 0;
       }
     });
 
