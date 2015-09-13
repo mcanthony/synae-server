@@ -71,7 +71,13 @@ export default class extends React.Component {
 
   render () {
     return this.state.buffer
-      ? <div>
+      ? <div style={{
+          backgroundImage: 'url(img/SECTION1-ShakeGroup1.png)',
+          backgroundSize: 'contain',
+          backgroundRepeat: 'no-repeat',
+          backgroundPosition: 'center center',
+          height: '100%'
+        }}>
           <p>(Turn up your volume, and turn any silent switches to OFF)</p>
           <p>{this.props.instructions}</p>
         </div>
