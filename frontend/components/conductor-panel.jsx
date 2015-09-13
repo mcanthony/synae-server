@@ -63,13 +63,13 @@ export default class ConductorPanel extends React.Component {
         if (!this.state.allowKinectInput) return;
         // stand, left, right
         switch (args[0]) {
-          case 'right':
-          case 'stand':
+          case 'left':
+          case 'head':
             this.nextSection();
             break;
-          case 'left':
-            this.prevSection();
-            break;
+          //case 'right':
+          //  this.prevSection();
+          //  break;
         }
       }
     });
