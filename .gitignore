@@ -1,3 +1,4 @@
 public/bundle.*
 node_modules
 tmp
+.DS_Store
