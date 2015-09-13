@@ -3,6 +3,7 @@ import debug from 'debug';
 import { Promise } from 'es6-promise';
 import binaryXHR from 'binary-xhr';
 import waakick from '../waakick';
+import xfader from '../xfader';
 
 let dbg = debug('synae-server:client');
 let dbgm = debug('synae-server:messages');
@@ -25,6 +26,7 @@ export default class ConductorPanel extends React.Component {
 
   actx = waakick();
   gain = null;
+  xfader = null;
 
   state = {
     groups: this.props.perfConfig.groups,
@@ -88,27 +90,21 @@ export default class ConductorPanel extends React.Component {
       });
     }
 
+    let catcher = e => {
+      console.error(e);
+    }
+
     Promise.all([
       pbuffer('audio/mp3/Section_1.mp3'),
       pbuffer('audio/mp3/Section_2.mp3'),
       pbuffer('audio/mp3/Section_3.mp3')
     ])
-    .catch(e => {
-      console.log(e);
-      alert(e);
-    })
-    .then((...args) => {
+    .catch(catcher)
+    .then(args => {
+      this.xfader = xfader(args, actx, this.gain, 2);
       this.setState({ buffers: args });
-    });
-  }
-
-  playSound(buffer) {
-    let {actx} = this;
-    let sample = actx.createBufferSource();
-    sample.buffer = buffer;
-    sample.connect(this.gain)
-    sample.onended = () => { sample.disconnect(); }
-    sample.start();
+    })
+    .catch(catcher);
   }
 
   startPerformance = () => {
@@ -121,9 +117,17 @@ export default class ConductorPanel extends React.Component {
     state.timingHasStarted = true;
 
     // start audio.
-    
+    this.xfader.start(0);
+
     this.setState(state);
     this.setupTimings();
+  }
+
+  mutePerformance = () => {
+    let param = this.gain.gain;
+    let now = this.actx.currentTime;
+    param.cancelScheduledValues(now);
+    param.linearRampToValueAtTime(0, now + 0.1);
   }
 
   setupTimings () {
@@ -170,7 +174,8 @@ export default class ConductorPanel extends React.Component {
       }
     });
 
-    //let activeSection = this.state.groups[0].activeSection;
+    let activeSection = this.state.groups[0].activeSection;
+    this.xfader.fadeTo(activeSection);
     this.setState(state);
     this.setupTimings();
   }
@@ -185,6 +190,8 @@ export default class ConductorPanel extends React.Component {
         g.activeSection = 0;
       }
     });
+    let activeSection = this.state.groups[0].activeSection;
+    this.xfader.fadeTo(activeSection);
     this.setState(state);
     this.setupTimings();
   }
@@ -236,6 +243,10 @@ export default class ConductorPanel extends React.Component {
             disabled={loading || this.state.timingHasStarted}
             className='button button-big'
             onClick={this.startPerformance}>Start Performance</button>
+          <button
+            disabled={loading}
+            className='button button-big bg-red'
+            onClick={this.mutePerformance}>MASTER MUTE</button>
         </div>
         <div>
           <button disabled={loading} className='button button-big' onClick={this.prevSection}>Previous Section</button>
