@@ -59,7 +59,11 @@ var perfConfig = {
             { gesture: 'slash', sample: 'audio/mp3/Section_1_Group_2_String_Swipe.mp3', instructions: 'Slash downwards when you hear fluttering.'}
           ]
         },
-        {},
+        {
+          sequences: [
+            { gesture: 'waterdrop', sample: 'audio/mp3/Section_2_Group_2_Water_drop___saliva.mp3', instructions: 'Tap.'}
+          ]
+        },
         {}
       ],
       activeSequence: 0,
@@ -107,6 +111,8 @@ var perfConfig = {
     }
   ]
 }
+
+// TODO: check for gyrometer support within devicemotion
 
 try {
   // This is simply to test for support, not to actually kick.

@@ -9,6 +9,7 @@ import SlashInstrument from './slash-instrument.jsx';
 import TickleInstrument from './tickle-instrument.jsx';
 import ScrubInstrument from './scrub-instrument.jsx';
 import ReachInstrument from './reach-instrument.jsx';
+import WaterdropInstrument from './waterdrop-instrument.jsx';
 
 let dbg = debug('synae-server:client');
 
@@ -18,7 +19,8 @@ const Instruments = {
   'slash': SlashInstrument,
   'tickle': TickleInstrument,
   'scrub': ScrubInstrument,
-  'reach': ReachInstrument
+  'reach': ReachInstrument,
+  'waterdrop': WaterdropInstrument
 }
 
 export default class AudiencePanel extends React.Component {

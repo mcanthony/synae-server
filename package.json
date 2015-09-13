@@ -26,6 +26,7 @@
     "dtw": "0.0.3",
     "less": "^2.5.1",
     "object-assign": "^4.0.1",
+    "pocket-physics": "^2.6.1",
     "react": "^0.13.3",
     "rhizome-server": "^0.6.2"
   },
