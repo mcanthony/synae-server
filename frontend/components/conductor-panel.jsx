@@ -26,11 +26,46 @@ export default class ConductorPanel extends React.Component {
     this.rconnected(() => {
       // Immediately send world state to resync in the event of a crash
       this.broadcastWorldState();
+      this.rsend('/sys/subscribe', ['/kinect-events']);
     });
 
     this.rrecv((address, args) => {
       if (address === '/broadcast/open/websockets') {
         return;
+      }
+      if (address === '/kinect-events') {
+        // stand, left, right
+        switch (args[0]) {
+          case 'right':
+          case 'stand':
+            this.nextSection();
+            break;
+          case 'left':
+            this.prevSection();
+            break;
+        }
+      }
+    });
+  }
+
+  nextSection () {
+    this.state.groups.forEach(g => {
+      g.activeSection += 1;
+      g.activeSequence = 0;
+
+      if (g.activeSection > g.sections.length - 1) {
+        g.activeSection = 0;
+      }
+    });
+  }
+
+  prevSection () {
+    this.state.groups.forEach(g => {
+      g.activeSection -= 1;
+      g.activeSequence = 0;
+
+      if (g.activeSection < 0) {
+        g.activeSection = 0;
       }
     });
   }
