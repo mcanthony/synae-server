@@ -22,6 +22,10 @@ export default class ConductorPanel extends React.Component {
     groups: this.props.perfConfig.groups,
     buffers: [],
     allowKinectInput: true,
+    timingHasStarted: false,
+    sectionTimers: {
+      // will have group-id => timeoutid
+    },
     masterActiveSection: 0
   }
 
@@ -97,13 +101,51 @@ export default class ConductorPanel extends React.Component {
   }
 
   startPerformance = () => {
-    this.state.groups.forEach(g => {
+    let { state } = this;
+    state.groups.forEach(g => {
       g.activeSection = 0;
       g.activeSequence = 0;
     });
 
+    state.timingHasStarted = true;
+
     // start audio.
     
+    this.setState(state);
+    this.setupTimings();
+  }
+
+  setupTimings () {
+    let { state } = this;
+    state.groups.forEach(g => {
+      let section = g.sections[g.activeSection];
+      if (section.timings && section.timings[g.activeSequence]) {
+        let duration = section.timings[g.activeSequence];
+        if (state.sectionTimers[g.id]) {
+          dbg('clearing timeout', g.id);
+          clearTimeout(state.sectionTimers[g.id]);
+        }
+        dbg('setting timeout', g.id, duration);
+        state.sectionTimers[g.id] = setTimeout(() => {
+          dbg('firing timeout', g.id, duration);
+          this.nextSequence(g.id);
+        }, duration);
+      }
+    })
+    this.setState(state);
+  }
+
+  nextSequence (groupId) {
+    let { state } = this;
+    state.groups.forEach(g => {
+      if (g.id !== groupId) return;
+      let sequences = g.sections[g.activeSection].sequences;
+      if (g.activeSequence < sequences.length - 1) {
+        g.activeSequence += 1;
+        dbg('sequence change', g.id, g.activeSequence);
+      }
+    });
+    this.setState(state);
   }
 
   nextSection = () => {
@@ -119,6 +161,7 @@ export default class ConductorPanel extends React.Component {
 
     //let activeSection = this.state.groups[0].activeSection;
     this.setState(state);
+    this.setupTimings();
   }
 
   prevSection = () => {
@@ -132,6 +175,7 @@ export default class ConductorPanel extends React.Component {
       }
     });
     this.setState(state);
+    this.setupTimings();
   }
 
   onEmitGroupSequenceChange = (e) => {
@@ -178,6 +222,8 @@ export default class ConductorPanel extends React.Component {
 
         <div>
           <button disabled={loading} className='button button-big' onClick={this.startPerformance}>Start Performance</button>
+        </div>
+        <div>
           <button disabled={loading} className='button button-big' onClick={this.prevSection}>Previous Section</button>
           <button disabled={loading} className='button button-big' onClick={this.nextSection}>Next Section</button>
           {loading && <span>Loading...</span>}
