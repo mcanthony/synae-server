@@ -98,7 +98,7 @@ var perfConfig = {
         {
           sequences: [
             { gesture: 'silent', instructions: 'Be still.' },
-            { gesture: 'scrub', sample: 'audio/mp3/Section_1_Group_3_String_Drag.mp3', instructions: 'Scratch the air with your phone when you hear slashing sounds'}
+            { gesture: 'reach', sample: 'audio/mp3/Section_1_Group_3_String_Drag.mp3', instructions: 'Scratch the air with your phone when you hear slashing sounds'}
           ],
           timings: [
             timeToMS(0, 42)

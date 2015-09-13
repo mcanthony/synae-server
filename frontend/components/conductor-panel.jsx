@@ -7,6 +7,14 @@ import waakick from '../waakick';
 let dbg = debug('synae-server:client');
 let dbgm = debug('synae-server:messages');
 
+let debounce = (fn, wait) => {
+  let ref = null;
+  return (...args) => {
+    if (ref) clearTimeout(ref);
+    ref = setTimeout(() => fn(...args), wait);
+  }
+}
+
 export default class ConductorPanel extends React.Component {
 
   static propTypes = {
@@ -31,6 +39,9 @@ export default class ConductorPanel extends React.Component {
 
   constructor(props) {
     super(props);
+
+    // Prevent overloading the network.
+    this.broadcastWorldState = debounce(this.broadcastWorldState, 20);
 
     // Shortcuts to rhizome callbacks
     let {rsend, rrecv, rconnected} = this.props;
@@ -209,7 +220,7 @@ export default class ConductorPanel extends React.Component {
   }
 
   // TODO: make this only happen when a new client connects?
-  broadcastWorldState () {
+  broadcastWorldState = () => {
     this.rsend('/world-state', [JSON.stringify(this.state)]);
   }
 
@@ -221,7 +232,10 @@ export default class ConductorPanel extends React.Component {
         <h1 className="px2">Conductor</h1>
 
         <div>
-          <button disabled={loading} className='button button-big' onClick={this.startPerformance}>Start Performance</button>
+          <button
+            disabled={loading || this.state.timingHasStarted}
+            className='button button-big'
+            onClick={this.startPerformance}>Start Performance</button>
         </div>
         <div>
           <button disabled={loading} className='button button-big' onClick={this.prevSection}>Previous Section</button>
