@@ -5,7 +5,7 @@ var storeDir = path.join(__dirname, 'tmp');
 if (!fs.existsSync(storeDir)) fs.mkdirSync(storeDir);
 
 exports.http = {
-    port: process.env.HTTP_PORT || 8080
+    port: parseInt(process.env.HTTP_PORT,10) || 8080
   , staticDir: path.join(__dirname, 'public')
 }
 
