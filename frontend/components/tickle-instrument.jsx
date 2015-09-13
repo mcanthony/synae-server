@@ -59,8 +59,9 @@ export default class extends React.Component {
 
     function bounce(ev) {
       bubbles.forEach(bubble => {
-        bubble.x += (Math.random() * 60 - 30);
-        bubble.y += (Math.random() * 60 - 30);
+        let range = 10;
+        bubble.x += (Math.random() * 2 * range - range);
+        bubble.y += (Math.random() * 2 * range - range);
       })
 
       me.playSound();
