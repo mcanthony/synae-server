@@ -66,7 +66,7 @@ var perfConfig = {
         },
         {
           sequences: [
-            { gesture: 'flutter', sample: 'audio/mp3/Section_3_Group_2_Electrical_C#.mp3', instructions: 'Shake phone after the group on your right plays sounds.'}
+            { gesture: 'flutter', sample: 'audio/mp3/Section_3_Group_2_Electrical_Csharp.mp3', instructions: 'Shake phone after the group on your right plays sounds.'}
           ]
         }
       ],

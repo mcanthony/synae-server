@@ -16,6 +16,7 @@ export default class ConductorPanel extends React.Component {
   }
 
   actx = waakick();
+  gain = null;
 
   state = {
     groups: this.props.perfConfig.groups,
@@ -57,6 +58,10 @@ export default class ConductorPanel extends React.Component {
 
   componentDidMount () {
     let {actx} = this;
+    this.gain = actx.createGain();
+    this.gain.connect(actx.destination);
+    this.gain.value = 1;
+
     let pbuffer = (bpath) => {
       return new Promise((resolve, reject) => {
         binaryXHR(bpath, (err, data) => {
@@ -80,8 +85,28 @@ export default class ConductorPanel extends React.Component {
     });
   }
 
-  nextSection () {
+  playSound(buffer) {
+    let {actx} = this;
+    let sample = actx.createBufferSource();
+    sample.buffer = buffer;
+    sample.connect(this.gain)
+    sample.onended = () => { sample.disconnect(); }
+    sample.start();
+  }
+
+  startPerformance = () => {
     this.state.groups.forEach(g => {
+      g.activeSection = 0;
+      g.activeSequence = 0;
+    });
+
+    // start audio.
+    
+  }
+
+  nextSection = () => {
+    let { state } = this;
+    state.groups.forEach(g => {
       g.activeSection += 1;
       g.activeSequence = 0;
 
@@ -89,10 +114,14 @@ export default class ConductorPanel extends React.Component {
         g.activeSection = 0;
       }
     });
+
+    //let activeSection = this.state.groups[0].activeSection;
+    this.setState(state);
   }
 
-  prevSection () {
-    this.state.groups.forEach(g => {
+  prevSection = () => {
+    let { state } = this;
+    state.groups.forEach(g => {
       g.activeSection -= 1;
       g.activeSequence = 0;
 
@@ -100,6 +129,7 @@ export default class ConductorPanel extends React.Component {
         g.activeSection = 0;
       }
     });
+    this.setState(state);
   }
 
   onEmitGroupSequenceChange = (e) => {
@@ -141,6 +171,7 @@ export default class ConductorPanel extends React.Component {
         <h1 className="px2">Conductor</h1>
 
         <div>
+          <button disabled={loading} className="button button-big" onClick={this.startPerformance}>Start Performance</button>
           <button disabled={loading} className="button button-big" onClick={this.prevSection}>Previous Section</button>
           <button disabled={loading} className="button button-big" onClick={this.nextSection}>Next Section</button>
           {loading && <span>Loading...</span>}
