@@ -1,5 +1,8 @@
 import React from 'react/addons';
 import debug from 'debug';
+import { Promise } from 'es6-promise';
+import binaryXHR from 'binary-xhr';
+import waakick from '../waakick';
 
 let dbg = debug('synae-server:client');
 let dbgm = debug('synae-server:messages');
@@ -12,8 +15,12 @@ export default class ConductorPanel extends React.Component {
     rconnected: React.PropTypes.func.isRequired
   }
 
+  actx = waakick();
+
   state = {
-    groups: this.props.perfConfig.groups
+    groups: this.props.perfConfig.groups,
+    buffers: [],
+    masterActiveSection: 0
   }
 
   constructor(props) {
@@ -45,6 +52,31 @@ export default class ConductorPanel extends React.Component {
             break;
         }
       }
+    });
+  }
+
+  componentDidMount () {
+    let {actx} = this;
+    let pbuffer = (bpath) => {
+      return new Promise((resolve, reject) => {
+        binaryXHR(bpath, (err, data) => {
+          if (err) return reject(err);
+          actx.decodeAudioData(data, b => resolve(b));
+        });
+      });
+    }
+
+    Promise.all([
+      pbuffer('audio/mp3/Section_1.mp3'),
+      pbuffer('audio/mp3/Section_2.mp3'),
+      pbuffer('audio/mp3/Section_3.mp3')
+    ])
+    .catch(e => {
+      console.log(e);
+      alert(e);
+    })
+    .then((...args) => {
+      this.setState({ buffers: args });
     });
   }
 
@@ -103,10 +135,16 @@ export default class ConductorPanel extends React.Component {
 
   render() {
     let self = this;
-
+    let loading = !this.state.buffers.length;
     return (
       <div className="conductor">
         <h1 className="px2">Conductor</h1>
+
+        <div>
+          <button disabled={loading} className="button button-big" onClick={this.prevSection}>Previous Section</button>
+          <button disabled={loading} className="button button-big" onClick={this.nextSection}>Next Section</button>
+          {loading && <span>Loading...</span>}
+        </div>
 
         <div className="group-list">
           {this.state.groups.map(g => {
