@@ -64,7 +64,11 @@ var perfConfig = {
             { gesture: 'waterdrop', sample: 'audio/mp3/Section_2_Group_2_Water_drop___saliva.mp3', instructions: 'Tap.'}
           ]
         },
-        {}
+        {
+          sequences: [
+            { gesture: 'flutter', sample: 'audio/mp3/Section_3_Group_2_Electrical_C#.mp3', instructions: 'Shake phone after the group on your right plays sounds.'}
+          ]
+        }
       ],
       activeSequence: 0,
       activeSection: 0
@@ -103,8 +107,16 @@ var perfConfig = {
             { gesture: 'reach', sample: 'audio/mp3/Section_1_Group_4_Whisper_bells.mp3', instructions: 'Reach upwards with your phone when you hear a dead spot.' }
           ]
         },
-        {},
-        {}
+        {
+          sequences: [
+            { gesture: 'waterdrop', sample: 'audio/mp3/Section_2_Group_2_Water_drop___saliva.mp3', instructions: 'Tap.'}
+          ]
+        },
+        {
+          sequences: [
+            { gesture: 'flutter', sample: 'audio/mp3/Section_3_Group_3_Electrical_fly.mp3', instructions: 'Shake phone after the group to your left plays sounds.'}
+          ]
+        }
       ],
       activeSequence: 0,
       activeSection: 0
