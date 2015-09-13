@@ -2,6 +2,7 @@ import React from 'react/addons';
 import debug from 'debug';
 
 import devicemotion from '../devicemotion';
+import motionsLowPass from '../motions-low-pass';
 
 let dbg = debug('synae-server:client');
 
@@ -139,6 +140,7 @@ export default class extends React.Component {
         return ts
       }, {});
       let compMeat = this.complementaryFilter(motions.slice(start, end));
+      let smoothedTimeSeries = motionsLowPass(motions, 0.1);
       console.log('motions')
       console.log(JSON.stringify(motions));
       console.log('timeSeries')
@@ -149,6 +151,8 @@ export default class extends React.Component {
       console.log(JSON.stringify(meat));
       console.log('compSeries meat', start, end);
       console.log(JSON.stringify(compMeat));
+      console.log('smoothedTimeSeries')
+      console.log(JSON.stringify(smoothedTimeSeries));
     }
 
     return <div>
@@ -156,8 +160,8 @@ export default class extends React.Component {
       <p>
       {
         this.state.recording
-        ? <button className='btn btn-primary' onClick={this.stopRecording}>STOP</button>
-        : <button className='btn btn-primary' onClick={this.beginRecording}>RECORD</button>
+        ? <button className='button button-big' onClick={this.stopRecording}>STOP</button>
+        : <button className='button button-big' onClick={this.beginRecording}>RECORD</button>
       }
       </p>
       <h1>Step 2: Copy data and send it somewhere</h1>

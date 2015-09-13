@@ -48,8 +48,8 @@ var perfConfig = {
       id: 'group-c',
       name: 'C',
       sequences: [
-        { gesture: 'silent' },
-        { gesture: 'scratch', sample: 'audio/mp3/Section_1_Group_3_String_Drag.mp3'}
+        { gesture: 'silent', instructions: 'Be still.' },
+        { gesture: 'scrub', sample: 'audio/mp3/Section_1_Group_3_String_Drag.mp3', instructions: 'Scratch the air with your phone when you hear slashing sounds'}
       ],
       activeSequence: 0
     },
@@ -57,8 +57,8 @@ var perfConfig = {
       id: 'group-d',
       name: 'D',
       sequences: [
-        { gesture: 'silent' },
-        { gesture: 'pulse', sample: 'audio/mp3/Section_1_Group_4_Whisper_bells.mp3'}
+        { gesture: 'silent', instructions: 'Be still.' },
+        { gesture: 'reach', sample: 'audio/mp3/Section_1_Group_4_Whisper_bells.mp3', instructions: 'Reach upwards with your phone when you hear a dead spot.' }
       ],
       activeSequence: 0
     }

@@ -7,9 +7,8 @@ import SilentInstrument from './silent-instrument.jsx';
 import FlutterInstrument from './flutter-instrument.jsx';
 import SlashInstrument from './slash-instrument.jsx';
 import TickleInstrument from './tickle-instrument.jsx';
-//import FlutterGesture from './flutter-gesture.jsx';
-//import FlutterGesture from './flutter-gesture.jsx';
-//import FlutterGesture from './flutter-gesture.jsx';
+import ScrubInstrument from './scrub-instrument.jsx';
+import ReachInstrument from './reach-instrument.jsx';
 
 let dbg = debug('synae-server:client');
 
@@ -17,7 +16,9 @@ const Instruments = {
   'silent': SilentInstrument,
   'flutter': FlutterInstrument,
   'slash': SlashInstrument,
-  'tickle': TickleInstrument
+  'tickle': TickleInstrument,
+  'scrub': ScrubInstrument,
+  'reach': ReachInstrument
 }
 
 export default class AudiencePanel extends React.Component {
