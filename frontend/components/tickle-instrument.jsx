@@ -7,7 +7,6 @@ var GRAVITY = 0.03;
 var CHARGE = -30;
 var RADIUS = 20;
 var DT = 500;
-var buffer;
 
 export default class extends React.Component {
 
@@ -18,7 +17,8 @@ export default class extends React.Component {
   }
 
   state = {
-    isLoading : true
+    isLoading: true,
+    buffer: null
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -33,8 +33,7 @@ export default class extends React.Component {
 
     binaryXHR(this.props.sample, (err, data) => {
       actx.decodeAudioData(data, b => {
-        buffer = b;
-        this.setState({ isLoading: false });
+        this.setState({ buffer: b, isLoading: false });
       });
     });
   }
@@ -108,7 +107,7 @@ export default class extends React.Component {
   playSound() {
     let {actx} = this.props;
     let sample = actx.createBufferSource();
-    sample.buffer = buffer;
+    sample.buffer = this.state.buffer;
     sample.connect(this.gain)
     sample.onended = () => { sample.disconnect(); }
     sample.start();
