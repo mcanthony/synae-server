@@ -42,7 +42,7 @@ var perfConfig = {
         },
         {
           sequences: [
-            { gesture: 'shake', sample: 'audio/mp3/Section_3_Group_1_Electrical_E.mp3', instructions: 'Shake phone after pianist plays a gesture.' }
+            { gesture: 'flutter', sample: 'audio/mp3/Section_3_Group_1_Electrical_E.mp3', instructions: 'Shake phone after pianist plays a gesture.' }
           ]
         }
       ],
@@ -75,8 +75,16 @@ var perfConfig = {
             { gesture: 'scrub', sample: 'audio/mp3/Section_1_Group_3_String_Drag.mp3', instructions: 'Scratch the air with your phone when you hear slashing sounds'}
           ]
         },
-        {},
-        {}
+        {
+          sequences: [
+            { gesture: 'flutter', sample: 'audio/mp3/Section_2_Group_3_Electrical_interruption.mp3', instructions: 'Shake phone quickly whenever you shift in your seat.'}
+          ]
+        },
+        {
+          sequences: [
+            { gesture: 'flutter', sample: 'audio/mp3/Section_3_Group_3_Electrical_interruption.mp3', instructions: 'Shake phone after the group in front of you plays sounds.'}
+          ]
+        }
       ],
       activeSequence: 0,
       activeSection: 0
