@@ -21,6 +21,7 @@ export default class ConductorPanel extends React.Component {
   state = {
     groups: this.props.perfConfig.groups,
     buffers: [],
+    allowKinectInput: true,
     masterActiveSection: 0
   }
 
@@ -42,6 +43,7 @@ export default class ConductorPanel extends React.Component {
         return;
       }
       if (address === '/kinect-events') {
+        if (!this.state.allowKinectInput) return;
         // stand, left, right
         switch (args[0]) {
           case 'right':
@@ -153,6 +155,10 @@ export default class ConductorPanel extends React.Component {
     this.setState(state);
   }
 
+  toggleKinect = () => {
+    this.setState({ allowKinectInput: !this.state.allowKinectInput });
+  }
+
   componentWillUpdate () {
     // This might be a horrible idea.
     this.broadcastWorldState();
@@ -171,10 +177,20 @@ export default class ConductorPanel extends React.Component {
         <h1 className="px2">Conductor</h1>
 
         <div>
-          <button disabled={loading} className="button button-big" onClick={this.startPerformance}>Start Performance</button>
-          <button disabled={loading} className="button button-big" onClick={this.prevSection}>Previous Section</button>
-          <button disabled={loading} className="button button-big" onClick={this.nextSection}>Next Section</button>
+          <button disabled={loading} className='button button-big' onClick={this.startPerformance}>Start Performance</button>
+          <button disabled={loading} className='button button-big' onClick={this.prevSection}>Previous Section</button>
+          <button disabled={loading} className='button button-big' onClick={this.nextSection}>Next Section</button>
           {loading && <span>Loading...</span>}
+        </div>
+
+        <div>
+          <label>
+            Allow Kinect Section Changes:
+            <input
+              type='checkbox'
+              checked={this.state.allowKinectInput}
+              onChange={this.toggleKinect} />
+          </label>
         </div>
 
         <div className="group-list">
