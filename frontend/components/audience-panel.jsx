@@ -84,8 +84,11 @@ export default class AudiencePanel extends React.Component {
     let group = hasWorldData
       ? this.state.world.groups.filter(g => g.id === this.state.groupId)[0]
       : null;
-    let sequence = group
-      ? group.sequences.filter((s, i) => i === group.activeSequence)[0]
+    let section = group
+      ? group.sections[group.activeSection]
+      : null;
+    let sequence = section
+      ? section.sequences[group.activeSequence]
       : null;
     let Instrument = sequence
       ? Instruments[sequence.gesture]

@@ -28,39 +28,74 @@ var perfConfig = {
     {
       id: 'group-a',
       name: 'A',
-      sequences: [
-        { gesture: 'flutter', sample: 'audio/mp3/Section_1_Group_1_flutter.mp3', instructions: 'Shake phone when you hear agitation in the piano.'},
-        { gesture: 'flutter', sample: 'audio/mp3/Section_1_Group_1_flutter.mp3', instructions: 'When you hear someone else\'s shake, wait two beats then shake.'},
-        { gesture: 'tickle',  sample: 'audio/mp3/Section_2_Group_1_blowing_bubbles.mp3', instructions: 'Tickle screen\'s bubbles whenever you grandly exhale.'}
+      sections: [
+        {
+          sequences: [
+            { gesture: 'flutter', sample: 'audio/mp3/Section_1_Group_1_flutter.mp3', instructions: 'Shake phone when you hear agitation in the piano.'},
+            { gesture: 'flutter', sample: 'audio/mp3/Section_1_Group_1_flutter.mp3', instructions: 'When you hear someone else\'s shake, wait two beats then shake.'},
+          ]
+        },
+        {
+          sequences: [
+            { gesture: 'tickle', sample: 'audio/mp3/Section_2_Group_1_blowing_bubbles.mp3', instructions: 'Tickle screen\'s bubbles whenever you grandly exhale.'}
+          ]
+        },
+        {
+          sequences: [
+            { gesture: 'shake', sample: 'audio/mp3/Section_3_Group_1_Electrical_E.mp3', instructions: 'Shake phone after pianist plays a gesture.' }
+          ]
+        }
       ],
-      activeSequence: 0
+      activeSequence: 0,
+      activeSection: 0
     },
     {
       id: 'group-b',
       name: 'B',
-      sequences: [
-        { gesture: 'silent', instructions: 'Be still.' },
-        { gesture: 'slash', sample: 'audio/mp3/Section_1_Group_2_String_Swipe.mp3', instructions: 'Slash downwards when you hear fluttering.'}
+      sections: [
+        {
+          sequences: [
+            { gesture: 'silent', instructions: 'Be still.' },
+            { gesture: 'slash', sample: 'audio/mp3/Section_1_Group_2_String_Swipe.mp3', instructions: 'Slash downwards when you hear fluttering.'}
+          ]
+        },
+        {},
+        {}
       ],
-      activeSequence: 0
+      activeSequence: 0,
+      activeSection: 0
     },
     {
       id: 'group-c',
       name: 'C',
-      sequences: [
-        { gesture: 'silent', instructions: 'Be still.' },
-        { gesture: 'scrub', sample: 'audio/mp3/Section_1_Group_3_String_Drag.mp3', instructions: 'Scratch the air with your phone when you hear slashing sounds'}
+      sections: [
+        {
+          sequences: [
+            { gesture: 'silent', instructions: 'Be still.' },
+            { gesture: 'scrub', sample: 'audio/mp3/Section_1_Group_3_String_Drag.mp3', instructions: 'Scratch the air with your phone when you hear slashing sounds'}
+          ]
+        },
+        {},
+        {}
       ],
-      activeSequence: 0
+      activeSequence: 0,
+      activeSection: 0
     },
     {
       id: 'group-d',
       name: 'D',
-      sequences: [
-        { gesture: 'silent', instructions: 'Be still.' },
-        { gesture: 'reach', sample: 'audio/mp3/Section_1_Group_4_Whisper_bells.mp3', instructions: 'Reach upwards with your phone when you hear a dead spot.' }
+      sections: [
+        {
+          sequences: [
+            { gesture: 'silent', instructions: 'Be still.' },
+            { gesture: 'reach', sample: 'audio/mp3/Section_1_Group_4_Whisper_bells.mp3', instructions: 'Reach upwards with your phone when you hear a dead spot.' }
+          ]
+        },
+        {},
+        {}
       ],
-      activeSequence: 0
+      activeSequence: 0,
+      activeSection: 0
     }
   ]
 }

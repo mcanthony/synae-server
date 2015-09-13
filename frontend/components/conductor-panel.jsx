@@ -43,7 +43,14 @@ export default class ConductorPanel extends React.Component {
     state.groups.forEach(g => {
       if (g.id === groupId) {
         // Bounds check.
-        g.activeSequence = Math.min(Math.max(g.activeSequence + add, 0), g.sequences.length-1);
+        let section = g.sections[g.activeSection];
+        if (++g.activeSequence > section.sequences.length - 1) {
+          g.activeSequence = 0;
+          g.activeSection += 1;
+        }
+        if (g.activeSection > g.sections.length - 1) {
+          g.activeSection = 0;
+        }
       }
     });
     this.setState(state);
@@ -68,10 +75,11 @@ export default class ConductorPanel extends React.Component {
 
         <div className="group-list">
           {this.state.groups.map(g => {
-            let seq = g.sequences[g.activeSequence].gesture;
+            let section = g.sections[g.activeSection];
+            let gesture = section.sequences[g.activeSequence].gesture;
             return (
               <div className="group-info">
-                <h2>Group {g.name}: {seq} {g.activeSequence}</h2>
+                <h2>Group {g.name}: {gesture} (Section {g.activeSection}, Sequence {g.activeSequence})</h2>
                 <button name="group-sequence-dec"
                   onClick={this.onEmitGroupSequenceChange}
                   data-groupid={g.id}
