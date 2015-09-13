@@ -42,12 +42,11 @@ export default class AudiencePanel extends React.Component {
     let {rsend, rrecv, rconnected, rhizome} = this.props;
     Object.assign(this, {rsend, rrecv, rconnected, rhizome});
 
-    // TODO: there is a race condition here where the conductor is notified
-    // of a new client before this subscription is successful, resulting in
-    // the audience never receiving the world state.
     this.rconnected(() => {
       this.rsend('/sys/subscribe', ['/world-state']);
       this.rsend('/sys/subscribe', ['/client/' + this.props.rid]);
+      // Retrieve world state once connected.
+      this.rsend('/sys/resend', ['/world-state']);
     });
 
     this.rrecv((address, args) => {

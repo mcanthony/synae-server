@@ -24,17 +24,12 @@ export default class ConductorPanel extends React.Component {
     Object.assign(this, {rsend, rrecv, rconnected});
 
     this.rconnected(() => {
-      // Listen for new clients
-      this.rsend('/sys/subscribe', ['/broadcast/open/websockets']);
-
       // Immediately send world state to resync in the event of a crash
       this.broadcastWorldState();
     });
 
     this.rrecv((address, args) => {
       if (address === '/broadcast/open/websockets') {
-        // send current world state to client
-        this.rsend('/client/' + args[0], [JSON.stringify(this.state)]);
         return;
       }
     });
@@ -76,7 +71,7 @@ export default class ConductorPanel extends React.Component {
             let seq = g.sequences[g.activeSequence].gesture;
             return (
               <div className="group-info">
-                <h2>Group {g.name}: {seq}</h2>
+                <h2>Group {g.name}: {seq} {g.activeSequence}</h2>
                 <button name="group-sequence-dec"
                   onClick={this.onEmitGroupSequenceChange}
                   data-groupid={g.id}
