@@ -3,6 +3,7 @@ import debug from 'debug';
 import SectionChooser from './section-chooser.jsx';
 
 import waakick from '../waakick';
+import WelcomeInstrument from './welcome-instrument.jsx';
 import SilentInstrument from './silent-instrument.jsx';
 import FlutterInstrument from './flutter-instrument.jsx';
 import SlashInstrument from './slash-instrument.jsx';
@@ -14,6 +15,7 @@ import WaterdropInstrument from './waterdrop-instrument.jsx';
 let dbg = debug('synae-server:client');
 
 const Instruments = {
+  'welcome': WelcomeInstrument,
   'silent': SilentInstrument,
   'flutter': FlutterInstrument,
   'slash': SlashInstrument,

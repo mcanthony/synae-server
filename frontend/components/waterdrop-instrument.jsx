@@ -229,6 +229,11 @@ export default class extends React.Component {
       <canvas
         onTouchEnd={this.touchClick}
         onClick={this.touchClick}></canvas>
+      <div style={{
+        position: 'absolute',
+        top: '0px',
+        left: '0px'
+      }}><p>{this.props.instructions}</p></div>
     </div>
   }
 }

@@ -35,6 +35,14 @@ var perfConfig = {
       sections: [
         {
           sequences: [
+            { gesture: 'welcome' },
+          ],
+          timings: [
+            timeToMS(0, 10)
+          ]
+        },
+        {
+          sequences: [
             { gesture: 'flutter', sample: 'audio/mp3/Section_1_Group_1_flutter.mp3', instructions: 'Shake phone when you hear agitation in the piano.'},
             { gesture: 'flutter', sample: 'audio/mp3/Section_1_Group_1_flutter.mp3', instructions: 'When you hear someone else\'s shake, wait two beats then shake.'},
           ],
@@ -50,7 +58,7 @@ var perfConfig = {
         {
           sequences: [
             { gesture: 'tickle', sample: 'audio/mp3/Section_2_Group_1_blowing_bubbles.mp3', instructions: 'Tickle screen\'s bubbles whenever you grandly exhale.'},
-            { gesture: 'flutter', sample: 'audio/mp3/Section_3_Group_1_Electrical_E.mp3', instructions: 'Shake phone after pianist plays a gesture.' }
+            { gesture: 'flutter', sample: 'audio/mp3/Section_3_Group_1_Electrical_E.mp3', instructions: 'Shake phone after pianist performs a gesture.' }
           ],
           timings: [
             timeToMS(0, 37)
@@ -66,6 +74,14 @@ var perfConfig = {
       sections: [
         {
           sequences: [
+            { gesture: 'welcome' },
+          ],
+          timings: [
+            timeToMS(0, 10)
+          ]
+        },
+        {
+          sequences: [
             { gesture: 'silent', instructions: 'Be still.' },
             { gesture: 'slash', sample: 'audio/mp3/Section_1_Group_2_String_Swipe.mp3', instructions: 'Slash downwards when you hear fluttering.'}
           ],
@@ -75,12 +91,12 @@ var perfConfig = {
         },
         {
           sequences: [
-            { gesture: 'waterdrop', sample: 'audio/mp3/Section_2_Group_2_Water_drop___saliva.mp3', instructions: 'Tap.'}
+            { gesture: 'waterdrop', sample: 'audio/mp3/Section_2_Group_2_Water_drop___saliva.mp3', instructions: 'Tap when you swallow saliva.'}
           ]
         },
         {
           sequences: [
-            { gesture: 'waterdrop', sample: 'audio/mp3/Section_2_Group_2_Water_drop___saliva.mp3', instructions: 'Tap.'},
+            { gesture: 'waterdrop', sample: 'audio/mp3/Section_2_Group_2_Water_drop___saliva.mp3', instructions: 'Tap when you swallow saliva.'},
             { gesture: 'flutter', sample: 'audio/mp3/Section_3_Group_2_Electrical_Csharp.mp3', instructions: 'Shake phone after the group on your right plays sounds.'}
           ],
           timings: [
@@ -95,6 +111,14 @@ var perfConfig = {
       id: 'group-c',
       name: 'C',
       sections: [
+        {
+          sequences: [
+            { gesture: 'welcome' },
+          ],
+          timings: [
+            timeToMS(0, 10)
+          ]
+        },
         {
           sequences: [
             { gesture: 'silent', instructions: 'Be still.' },
@@ -128,6 +152,14 @@ var perfConfig = {
       sections: [
         {
           sequences: [
+            { gesture: 'welcome' },
+          ],
+          timings: [
+            timeToMS(0, 10)
+          ]
+        },
+        {
+          sequences: [
             { gesture: 'silent', instructions: 'Be still.' },
             { gesture: 'reach', sample: 'audio/mp3/Section_1_Group_4_Whisper_bells.mp3', instructions: 'Reach upwards with your phone when you hear a dead spot.' }
           ],
@@ -137,13 +169,13 @@ var perfConfig = {
         },
         {
           sequences: [
-            { gesture: 'waterdrop', sample: 'audio/mp3/Section_2_Group_2_Water_drop___saliva.mp3', instructions: 'Tap.'}
+            { gesture: 'waterdrop', sample: 'audio/mp3/Section_2_Group_4_Popping.mp3', instructions: 'Tap when you swallow saliva.'}
           ]
         },
         {
           sequences: [
-            { gesture: 'waterdrop', sample: 'audio/mp3/Section_2_Group_2_Water_drop___saliva.mp3', instructions: 'Tap.'},
-            { gesture: 'flutter', sample: 'audio/mp3/Section_3_Group_3_Electrical_fly.mp3', instructions: 'Shake phone after the group to your left plays sounds.'}
+            { gesture: 'waterdrop', sample: 'audio/mp3/Section_2_Group_4_Popping.mp3', instructions: 'Tap when you swallow saliva.'},
+            { gesture: 'flutter', sample: 'audio/mp3/Section_3_Group_4_Electrical_fly.mp3', instructions: 'Shake phone after the group to your left plays sounds.'}
           ],
           timings: [
             timeToMS(0, 37)

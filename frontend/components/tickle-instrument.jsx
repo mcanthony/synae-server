@@ -8,6 +8,17 @@ var CHARGE = -30;
 var RADIUS = 20;
 var DT = 500;
 
+let throttle = (fn, min) => {
+  let prev = Date.now();
+  return () => {
+    let now = Date.now();
+    if (now - prev > min) {
+      fn();
+      prev = now;
+    }
+  }
+}
+
 export default class extends React.Component {
 
   static propTypes = {
@@ -19,6 +30,11 @@ export default class extends React.Component {
   state = {
     isLoading: true,
     buffer: null
+  }
+
+  constructor (props) {
+    super(props);
+    this.playSound = throttle(this.playSound.bind(this), 1000);
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -56,14 +72,14 @@ export default class extends React.Component {
         .attr('cy', d => d.y)
     }
 
-    function bounce(ev) {
+    let bounce = (ev) => {
       bubbles.forEach(bubble => {
         let range = 10;
         bubble.x += (Math.random() * 2 * range - range);
         bubble.y += (Math.random() * 2 * range - range);
       })
 
-      me.playSound();
+      this.playSound();
       sim.resume();
     }
 
@@ -116,6 +132,11 @@ export default class extends React.Component {
   render() {
     return (
       <div className='tickle-container'>
+        <div style={{
+          position: 'absolute',
+          top: '0px',
+          left: '0px'
+        }}><p>{this.props.instructions}</p></div>
         <svg className='tickle-svg'></svg>
       </div>
     );

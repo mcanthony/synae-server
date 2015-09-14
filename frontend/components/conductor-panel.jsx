@@ -60,11 +60,14 @@ export default class ConductorPanel extends React.Component {
         return;
       }
       if (address === '/kinect-events') {
-        if (!this.state.allowKinectInput) return;
+        if (
+          !this.state.allowKinectInput
+          || !this.state.buffers.length) return;
         // stand, left, right
         switch (args[0]) {
           case 'left':
           case 'head':
+          case 'upwards-point':
             this.nextSection();
             break;
           //case 'right':
@@ -95,6 +98,13 @@ export default class ConductorPanel extends React.Component {
     }
 
     Promise.all([
+      new Promise((resolve, reject) => {
+        // Gross. Make a blank audio buffer to prevent premature audio changes.
+        let duration = this.state.groups[0].sections[0].timings[0];
+        let { sampleRate } = actx;
+        let buffer = actx.createBuffer(1, duration, sampleRate);
+        resolve(buffer);
+      }),
       pbuffer('audio/mp3/Section_1.mp3'),
       pbuffer('audio/mp3/Section_2.mp3'),
       pbuffer('audio/mp3/Section_3.mp3')
@@ -143,7 +153,12 @@ export default class ConductorPanel extends React.Component {
         dbg('setting timeout', g.id, duration);
         state.sectionTimers[g.id] = setTimeout(() => {
           dbg('firing timeout', g.id, duration);
-          this.nextSequence(g.id);
+          if (g.activeSection === 0) {
+            dbg('special case: welcome');
+            this.nextSection();
+          } else {
+            this.nextSequence(g.id);
+          }
         }, duration);
       }
     })
@@ -191,7 +206,7 @@ export default class ConductorPanel extends React.Component {
       }
     });
     let activeSection = this.state.groups[0].activeSection;
-    this.xfader.fadeTo(activeSection);
+    //this.xfader.fadeTo(activeSection);
     this.setState(state);
     this.setupTimings();
   }
