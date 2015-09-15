@@ -31,7 +31,7 @@
     "object-assign": "^4.0.1",
     "pocket-physics": "^2.6.1",
     "react": "^0.13.3",
-    "rhizome-server": "^0.6.2",
+    "rhizome-server": "^0.7.0",
     "uglify-js": "^2.4.24"
   },
   "devDependencies": {

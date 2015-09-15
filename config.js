@@ -4,21 +4,25 @@ var path = require('path')
 var storeDir = path.join(__dirname, 'tmp');
 if (!fs.existsSync(storeDir)) fs.mkdirSync(storeDir);
 
-exports.http = {
-    port: parseInt(process.env.HTTP_PORT,10) || 8080
-  , staticDir: path.join(__dirname, 'public')
-}
+var HTTP_PORT = parseInt(process.env.HTTP_PORT,10) || 8080;
 
-// same port as http
-exports.websockets = {}
-
+exports.servers = [
+  {
+    type: 'http',
+    config: {
+      port: HTTP_PORT,
+      staticDir: path.join(__dirname, 'public')
+    }
+  },
+  {
+    type: 'websockets',
+    config: {
+      port: HTTP_PORT
+    }
+  }
+]
 
 exports.connections = {
-    store: storeDir
-  , collectStats: true
-}
-
-
-exports.osc = {
-  port: 9000
+  store: storeDir,
+  collectStats: true
 }
