@@ -1,15 +1,10 @@
 import React from 'react/addons';
 
-export default class SectionChooser extends React.Component {
+export default class extends React.Component {
 
   static propTypes = {
     groups: React.PropTypes.array.isRequired,
     onGroupSelect: React.PropTypes.func.isRequired
-  }
-
-  static defaultProps = {
-    groups: [],
-    onGroupSelect: null
   }
 
   render() {
@@ -19,9 +14,10 @@ export default class SectionChooser extends React.Component {
           key={g.id}
           type='button'
           className='button button-big'
+          style={{ backgroundColor: g.color }}
           onClick={this.props.onGroupSelect.bind(this, g.id)}
           data-groupid={g.id}
-          >Group {g.name}</button>
+          >{g.name}</button>
       )
     });
     return (

@@ -1,6 +1,6 @@
 import React from 'react/addons';
 import debug from 'debug';
-import SectionChooser from './section-chooser.jsx';
+import GroupChooser from './group-chooser.jsx';
 
 import waakick from '../waakick';
 import WelcomeInstrument from './welcome-instrument.jsx';
@@ -107,8 +107,9 @@ export default class AudiencePanel extends React.Component {
             ? <div><Instrument
               sample={sequence.sample}
               instructions={sequence.instructions}
-              actx={this.state.actx} /></div>
-            : <SectionChooser
+              actx={this.state.actx}
+              groupId={this.state.groupId} /></div>
+            : <GroupChooser
               groups={this.state.world.groups}
               onGroupSelect={this.onGroupSelect} />
         }

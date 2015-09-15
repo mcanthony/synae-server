@@ -31,7 +31,8 @@ var perfConfig = {
   groups: [
     {
       id: 'group-a',
-      name: 'A',
+      name: 'Blue',
+      color: '#69cadf',
       sections: [
         {
           sequences: [
@@ -80,7 +81,8 @@ var perfConfig = {
     },
     {
       id: 'group-b',
-      name: 'B',
+      name: 'Red',
+      color: '#f05d5f',
       sections: [
         {
           sequences: [
@@ -128,7 +130,8 @@ var perfConfig = {
     },
     {
       id: 'group-c',
-      name: 'C',
+      name: 'Green',
+      color: '#80c898',
       sections: [
         {
           sequences: [
@@ -176,7 +179,8 @@ var perfConfig = {
     },
     {
       id: 'group-d',
-      name: 'D',
+      name: 'Yellow',
+      color: '#f2d86d',
       sections: [
         {
           sequences: [
