@@ -11,6 +11,7 @@ export default class extends React.Component {
   static propTypes = {
     actx: React.PropTypes.object.isRequired,
     sample: React.PropTypes.string.isRequired,
+    groupId: React.PropTypes.string.isRequired,
     instructions: React.PropTypes.string.isRequired
   }
 
@@ -71,9 +72,17 @@ export default class extends React.Component {
   }
 
   render () {
+
+    let gestureUrl = {
+      'group-a': 'img/SECTION1-ShakeGroup1.png',
+      'group-b': 'img/SECTION2-ShakeGroupERRYBODY.png',
+      'group-c': 'img/SECTION2-ShakeGroup3.png',
+      'group-d': 'img/SECTION3-ShakeGroupERRYBODY.png'
+    }[this.props.groupId];
+
     return this.state.buffer
       ? <div style={{
-          backgroundImage: 'url(img/SECTION1-ShakeGroup1.png)',
+          backgroundImage: 'url(' + gestureUrl + ')',
           backgroundSize: 'contain',
           backgroundRepeat: 'no-repeat',
           backgroundPosition: 'center center',
