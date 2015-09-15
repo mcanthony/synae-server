@@ -127,7 +127,7 @@ export default class ConductorPanel extends React.Component {
     state.timingHasStarted = true;
 
     // start audio.
-    this.xfader.start(0);
+    this.xfader.fadeTo(0);
 
     this.setState(state);
     this.setupTimings();
@@ -206,7 +206,7 @@ export default class ConductorPanel extends React.Component {
       }
     });
     let activeSection = this.state.groups[0].activeSection;
-    //this.xfader.fadeTo(activeSection);
+    this.xfader.fadeTo(activeSection);
     this.setState(state);
     this.setupTimings();
   }

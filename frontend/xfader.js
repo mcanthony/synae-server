@@ -1,6 +1,6 @@
 
 export default function xfader (buffers, actx, output, transitionTime) {
-  
+
   let gains = buffers.map(b => {
     let gain = actx.createGain();
     gain.connect(output);
@@ -8,19 +8,16 @@ export default function xfader (buffers, actx, output, transitionTime) {
     return gain;
   });
 
-  let samples = buffers.map((b, i) => {
+  let samples = [];
+
+  let sampleForBuffer = (idx) => {
     let sample = actx.createBufferSource();
-    sample.buffer = b;
-    sample.connect(gains[i]);
+    sample.buffer = buffers[idx];
+    sample.connect(gains[idx]);
     sample.onended = () => {
       sample.disconnect();
-      gains[i].disconnect();
     }
     return sample;
-  });
-
-  let start = (index) => {
-    samples[index].start();
   }
 
   let fadeTo = (toIndex) => {
@@ -30,10 +27,12 @@ export default function xfader (buffers, actx, output, transitionTime) {
       g.gain.linearRampToValueAtTime(0, future);
     });
     gains[toIndex].gain.linearRampToValueAtTime(1.0, future);
-    samples[toIndex].start();
+    if (samples[toIndex]) samples[toIndex].stop();
+    let sample = samples[toIndex] = sampleForBuffer(toIndex);
+    sample.start();
   }
 
   return {
-    start, fadeTo
+    fadeTo
   }
 }
