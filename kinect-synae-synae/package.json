@@ -1,0 +1,15 @@
+{
+  "name": "kinect-synae",
+  "version": "1.0.0",
+  "description": "a kinectv2 application without c++ bitches",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "author": "Alex Petersen <theoperatore@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "kinect2": "0.0.29",
+    "rhizome-server": "^0.7.0"
+  }
+}
