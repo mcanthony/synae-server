@@ -85,12 +85,12 @@ export default class extends React.Component {
     return this.state.buffer
       ? <div style={{
           backgroundImage: 'url(' + this.props.iconUrl + ')',
-          backgroundSize: 'contain',
+          backgroundSize: '50%',
           backgroundRepeat: 'no-repeat',
-          backgroundPosition: 'center center',
+          backgroundPosition: '50% 66%',
           height: '100%'
         }}>
-          <p>{this.props.instructions}</p>
+          <h1 className='center'>{this.props.instructions}</h1>
         </div>
       : <div>Fetching...</div>
   }

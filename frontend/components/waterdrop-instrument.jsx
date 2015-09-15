@@ -9,7 +9,7 @@ import binaryXHR from 'binary-xhr';
 
 const CONSTRAINT_ITERATIONS = 3;
 const DRAG = 0.99;
-const HUE_GRADATIONS = 30;
+const HUE_GRADATIONS = 220;
 const TIMESTEP = 100;
 const DENSITY = 10;
 
@@ -35,11 +35,12 @@ export default class extends React.Component {
   constraints = null;
 
   boxWidth = 0;
-  maxZVelocity = 100;
+  maxZVelocity = 20;
 
   sizeup = () => {
     this.cvs.width = window.innerWidth;
     this.cvs.height = window.innerHeight;
+    this.boxWidth = Math.floor(Math.min(this.cvs.width, this.cvs.height) / DENSITY);
   }
 
   componentDidMount () {
@@ -65,21 +66,22 @@ export default class extends React.Component {
     let points = this.points = [];
     let constraints = this.constraints = [];
 
-    let boxWidth = this.boxWidth = Math.floor(Math.max(cvs.width, cvs.height) / DENSITY);
+    let boxWidth = this.boxWidth = Math.floor(Math.min(cvs.width, cvs.height) / DENSITY);
 
-    this.hues = huemaster(HUE_GRADATIONS, '80%', '67%', '1');
+    this.hues = huemaster(HUE_GRADATIONS, '100', '60', '1');
 
-    let pointCountX = this.pointCountX = DENSITY;
-    let pointCountY = this.pointCountY = Math.floor(cvs.height / boxWidth);
+    let pointCountX = this.pointCountX = DENSITY + 4;
+    let pointCountY = this.pointCountY = Math.floor(cvs.height / boxWidth) + 4;
     var totalPointCount = pointCountX * pointCountY;
 
     for (var i = 0; i < totalPointCount; i++) {
 
-      var ix = i % pointCountX;
-      var iy = Math.floor(i / pointCountX);
+      var id = i % pointCountX;
+      var ix = i % pointCountX - 2;
+      var iy = Math.floor(i / pointCountX) - 2;
 
       var point = {
-        id: ix + ',' + iy,
+        id: id + ',' + iy,
         cpos: { x: ix * boxWidth, y: iy * boxWidth, z: 0 },
         ppos: { x: ix * boxWidth, y: iy * boxWidth, z: 0 },
         acel: { x: 0, y: 0, z: 0 },
@@ -142,8 +144,8 @@ export default class extends React.Component {
       var cpos = points[i].cpos;
       var ppos = points[i].ppos;
       var velz = cpos.z - ppos.z;
-      var h = (velz / maxZVelocity) * 360 //Math.PI * 2;
-      var cameraZ = 100;
+      var hue = (velz / maxZVelocity) * 50 //Math.PI * 2;
+      var cameraZ = 1000;
 
       var distRatio = cpos.z / cameraZ;
       var w = boxWidth + (distRatio * boxWidth);
@@ -152,7 +154,7 @@ export default class extends React.Component {
       var y = cpos.y - ((distRatio * boxWidth) / 2)
 
       ctx.beginPath();
-      ctx.fillStyle = this.hues(h);
+      ctx.fillStyle = this.hues(hue);
       ctx.fillRect(x, y, w, h);
     }
   }
@@ -228,9 +230,9 @@ export default class extends React.Component {
   render () {
     return <div style={{
           backgroundImage: 'url(' + this.props.iconUrl + ')',
-          backgroundSize: 'contain',
+          backgroundSize: '50%',
           backgroundRepeat: 'no-repeat',
-          backgroundPosition: 'center center',
+          backgroundPosition: '50% 66%',
           height: '100%'
         }}>
       <canvas
@@ -240,7 +242,7 @@ export default class extends React.Component {
         position: 'absolute',
         top: '0px',
         left: '0px'
-      }}><p>{this.props.instructions}</p></div>
+      }}><h1 className='center'>{this.props.instructions}</h1></div>
     </div>
   }
 }
@@ -273,11 +275,10 @@ function debugDrawPoints(ctx, points) {
 
 
 function huemaster(gradations, s, l, a) {
-  var hexes = []
-  var circle = 360
+  var hexes = [];
+  var circle = gradations;
 
-  var inc = (circle / gradations);
-  for (var i = 0; i < gradations; i++) {
+  for (var i = 200; i < gradations; i++) {
     var h = (i/gradations) * circle;
     hexes.push( HSLtoRGB(h, s, l, a) );
   }

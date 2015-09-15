@@ -65,7 +65,7 @@ var perfConfig = {
           sequences: [
             { gesture: 'tickle',
               sample: 'audio/mp3/Section_2_Group_1_blowing_bubbles.mp3',
-              instructions: 'Tickle screen\'s bubbles whenever you grandly exhale.',
+              instructions: 'Tickle bubbles when you grandly exhale.',
               iconUrl: 'img/SECTION2-TickleGroup1.png'}
           ]
         },
@@ -162,7 +162,7 @@ var perfConfig = {
               instructions: 'Be still.' },
             { gesture: 'scratch',
               sample: 'audio/mp3/Section_1_Group_3_String_Drag.mp3',
-              instructions: 'Scratch the air with your phone when you hear slashing sounds',
+              instructions: 'Scratch the air when you hear slashing sounds',
               iconUrl: 'img/SECTION1-ScratchGroup3.png'}
           ],
           timings: [

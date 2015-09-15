@@ -109,7 +109,8 @@ export default class extends React.Component {
         .attr('cx', d => d.x)
         .attr('cy', d => d.y)
         .attr('r', 0)
-        .style('fill', 'skyblue')
+        .style('fill', 'rgba(51,51,51,0.66)')
+        .style('stroke', 'lightgray')
         .transition()
         .duration(350)
         .ease('bounce')
@@ -134,16 +135,16 @@ export default class extends React.Component {
     return (
       <div style={{
           backgroundImage: 'url(' + this.props.iconUrl + ')',
-          backgroundSize: 'contain',
+          backgroundSize: '40%',
           backgroundRepeat: 'no-repeat',
-          backgroundPosition: 'center center',
+          backgroundPosition: '50% 100%',
           height: '100%'
         }} className='tickle-container'>
         <div style={{
           position: 'absolute',
           top: '0px',
           left: '0px'
-        }}><p>{this.props.instructions}</p></div>
+        }}><h1 className='center'>{this.props.instructions}</h1></div>
         <svg className='tickle-svg'></svg>
       </div>
     );
