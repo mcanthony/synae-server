@@ -2,6 +2,8 @@ TODO
 
 - [ ] audience groups -> grid + colors
 - [ ] gesture images
+- [ ] JOIN button needs better styling
+- [ ] Dark #333333 background?
 - [ ] create audio test intro page, instructions about silent switch + do not disturb + volume up
   - [ ] Include "supported browsers" list of icons
   - [ ] include feature detection / user agent checks for android stock browser?
