@@ -79,7 +79,6 @@ export default class extends React.Component {
           backgroundPosition: 'center center',
           height: '100%'
         }}>
-          <p>(Turn up your volume, and turn any silent switches to OFF)</p>
           <p>{this.props.instructions}</p>
         </div>
       : <div>Fetching...</div>
