@@ -11,10 +11,29 @@ html, body {
 .container,
 .audience,
 .audience > div,
-.tickle-container {
+.tickle-container,
+.performer-panel-container {
   height: 100%;
 }
 
 .tickle-container {
   overflow: hidden;
+}
+
+.performer-panel-header > h1 {
+  text-align: center;
+  font-size: 10vh;
+  margin-top: 0;
+}
+
+.performer-panel-section-index {
+  width: 240px;
+  height: 240px;
+  display:block;
+  margin: 0 auto;
+  font-size: 200px;
+  line-height:  240px;
+  text-align: center;
+  border-radius: 50%;
+  background-color: #EE352E;
 }

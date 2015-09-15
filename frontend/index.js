@@ -9,6 +9,7 @@ import waakick from './waakick';
 import ConductorPanel from './components/conductor-panel.jsx';
 import AudiencePanel from './components/audience-panel.jsx';
 import GestureRecordPanel from './components/gesturerecord-panel.jsx';
+import PerformerPanel from './components/performer-panel.jsx';
 
 // polyfill
 Object.assign = Object.assign || objectAssign;
@@ -285,6 +286,8 @@ function initialize () {
     React.render(<ConductorPanel {...commonProps} />, root);
   } else if ('gesturedebug' in qs) {
     React.render(<GestureRecordPanel />, root);
+  } else if ('performer' in qs) {
+    React.render(<PerformerPanel {...commonProps} />, root);
   } else {
     React.render(<AudiencePanel {...commonProps} rid={rhizome.id} />, root);
   }
