@@ -8,7 +8,7 @@ import SilentInstrument from './silent-instrument.jsx';
 import FlutterInstrument from './flutter-instrument.jsx';
 import SlashInstrument from './slash-instrument.jsx';
 import TickleInstrument from './tickle-instrument.jsx';
-import ScrubInstrument from './scrub-instrument.jsx';
+import ScratchInstrument from './scratch-instrument.jsx';
 import ReachInstrument from './reach-instrument.jsx';
 import WaterdropInstrument from './waterdrop-instrument.jsx';
 
@@ -20,7 +20,7 @@ const Instruments = {
   'flutter': FlutterInstrument,
   'slash': SlashInstrument,
   'tickle': TickleInstrument,
-  'scrub': ScrubInstrument,
+  'scratch': ScratchInstrument,
   'reach': ReachInstrument,
   'waterdrop': WaterdropInstrument
 }
@@ -108,7 +108,8 @@ export default class AudiencePanel extends React.Component {
               sample={sequence.sample}
               instructions={sequence.instructions}
               actx={this.state.actx}
-              groupId={this.state.groupId} /></div>
+              groupId={this.state.groupId}
+              iconUrl={sequence.iconUrl} /></div>
             : <GroupChooser
               groups={this.state.world.groups}
               onGroupSelect={this.onGroupSelect} />

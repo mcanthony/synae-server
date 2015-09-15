@@ -1,7 +1,8 @@
 TODO
 
+- [ ] Check on Rhizome static file serving: will large files destroy the server?
 - [ ] audience groups -> grid + colors
-- [ ] gesture images
+- [x] gesture images
 - [ ] JOIN button needs better styling
 - [ ] Dark #333333 background?
 - [ ] create audio test intro page, instructions about silent switch + do not disturb + volume up
@@ -13,7 +14,6 @@ TODO
 - [ ] remove multiple sample fires
 - [ ] water drop anchors should be vertical not horizontal
 - [ ] water drop colors should be bluish
-- [ ]
 
 
 gestures:

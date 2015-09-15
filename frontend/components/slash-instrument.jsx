@@ -11,7 +11,8 @@ export default class extends React.Component {
   static propTypes = {
     actx: React.PropTypes.object.isRequired,
     sample: React.PropTypes.string.isRequired,
-    instructions: React.PropTypes.string.isRequired
+    instructions: React.PropTypes.string.isRequired,
+    iconUrl: React.PropTypes.string.isRequired
   }
 
   state = {
@@ -86,7 +87,13 @@ export default class extends React.Component {
 
   render () {
     return this.state.buffer
-      ? <div>
+      ? <div style={{
+          backgroundImage: 'url(' + this.props.iconUrl + ')',
+          backgroundSize: 'contain',
+          backgroundRepeat: 'no-repeat',
+          backgroundPosition: 'center center',
+          height: '100%'
+        }}>
           <p>(Turn up your volume, and turn any silent switches to OFF)</p>
           <p>{this.props.instructions}</p>
         </div>

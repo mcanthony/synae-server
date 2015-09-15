@@ -24,7 +24,8 @@ export default class extends React.Component {
   static propTypes = {
     actx: React.PropTypes.object.isRequired,
     sample: React.PropTypes.string.isRequired,
-    instructions: React.PropTypes.string.isRequired
+    instructions: React.PropTypes.string.isRequired,
+    iconUrl: React.PropTypes.string.isRequired
   }
 
   state = {
@@ -131,7 +132,13 @@ export default class extends React.Component {
 
   render() {
     return (
-      <div className='tickle-container'>
+      <div style={{
+          backgroundImage: 'url(' + this.props.iconUrl + ')',
+          backgroundSize: 'contain',
+          backgroundRepeat: 'no-repeat',
+          backgroundPosition: 'center center',
+          height: '100%'
+        }} className='tickle-container'>
         <div style={{
           position: 'absolute',
           top: '0px',
