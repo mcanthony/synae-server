@@ -109,7 +109,8 @@ export default class AudiencePanel extends React.Component {
               instructions={sequence.instructions}
               actx={this.state.actx}
               groupId={this.state.groupId}
-              iconUrl={sequence.iconUrl} /></div>
+              iconUrl={sequence.iconUrl}
+              minimumForce={sequence.minimumForce} /></div>
             : <GroupChooser
               groups={this.state.world.groups}
               onGroupSelect={this.onGroupSelect} />

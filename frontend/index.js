@@ -48,11 +48,13 @@ var perfConfig = {
             { gesture: 'flutter',
               sample: 'audio/mp3/Section_1_Group_1_flutter.mp3',
               instructions: 'Shake phone when you hear agitation in the piano.',
-              iconUrl: 'img/SECTION1-ShakeGroup1.png'},
+              iconUrl: 'img/SECTION1-ShakeGroup1.png',
+              minimumForce: 10},
             { gesture: 'flutter',
               sample: 'audio/mp3/Section_1_Group_1_flutter.mp3',
               instructions: 'When you hear someone else\'s shake, wait two beats then shake.',
-              iconUrl: 'img/SECTION1-ShakeGroup1.png'},
+              iconUrl: 'img/SECTION1-ShakeGroup1.png',
+              minimumForce: 10},
           ],
           timings: [
             timeToMS(0, 42)
@@ -75,7 +77,8 @@ var perfConfig = {
             { gesture: 'flutter',
               sample: 'audio/mp3/Section_3_Group_1_Electrical_E.mp3',
               instructions: 'Shake phone after pianist performs a gesture.',
-              iconUrl: 'img/SECTION3-ShakeGroupERRYBODY.png'}
+              iconUrl: 'img/SECTION3-ShakeGroupERRYBODY.png',
+              minimumForce: 10}
           ],
           timings: [
             timeToMS(0, 37)
@@ -128,7 +131,8 @@ var perfConfig = {
             { gesture: 'flutter',
               sample: 'audio/mp3/Section_3_Group_2_Electrical_Csharp.mp3',
               instructions: 'Shake phone after the group on your right plays sounds.',
-              iconUrl: 'img/SECTION3-ShakeGroupERRYBODY.png'}
+              iconUrl: 'img/SECTION3-ShakeGroupERRYBODY.png',
+              minimumForce: 10}
           ],
           timings: [
             timeToMS(0, 37)
@@ -169,7 +173,8 @@ var perfConfig = {
             { gesture: 'flutter',
               sample: 'audio/mp3/Section_2_Group_3_Electrical_interruption.mp3',
               instructions: 'Shake phone quickly whenever you shift in your seat.',
-              iconUrl: 'img/SECTION2-ShakeGroup3.png'}
+              iconUrl: 'img/SECTION2-ShakeGroup3.png',
+              minimumForce: 5}
           ]
         },
         {
@@ -177,11 +182,13 @@ var perfConfig = {
             { gesture: 'flutter',
               sample: 'audio/mp3/Section_2_Group_3_Electrical_interruption.mp3',
               instructions: 'Shake phone quickly whenever you shift in your seat.',
-              iconUrl: 'img/SECTION2-ShakeGroup3.png'},
+              iconUrl: 'img/SECTION2-ShakeGroup3.png',
+              minimumForce: 5},
             { gesture: 'flutter',
               sample: 'audio/mp3/Section_3_Group_3_Electrical_interruption.mp3',
               instructions: 'Shake phone after the group in front of you plays sounds.',
-              iconUrl: 'img/SECTION3-ShakeGroupERRYBODY.png'}
+              iconUrl: 'img/SECTION3-ShakeGroupERRYBODY.png',
+              minimumForce: 10}
           ],
           timings: [
             timeToMS(0, 37)
@@ -234,7 +241,8 @@ var perfConfig = {
             { gesture: 'flutter',
               sample: 'audio/mp3/Section_3_Group_4_Electrical_fly.mp3',
               instructions: 'Shake phone after the group to your left plays sounds.',
-              iconUrl: 'img/SECTION3-ShakeGroupERRYBODY.png'}
+              iconUrl: 'img/SECTION3-ShakeGroupERRYBODY.png',
+              minimumForce: 10}
           ],
           timings: [
             timeToMS(0, 37)
