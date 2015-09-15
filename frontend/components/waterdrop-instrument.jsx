@@ -9,7 +9,11 @@ import binaryXHR from 'binary-xhr';
 
 const CONSTRAINT_ITERATIONS = 3;
 const DRAG = 0.99;
-const HUE_GRADATIONS = 220;
+
+const HUE_GRADATIONS = 250;
+const LOWER_BOUND_HUE = 200;
+const HUE_DEPTH = 45;
+
 const TIMESTEP = 100;
 const DENSITY = 10;
 
@@ -35,7 +39,7 @@ export default class extends React.Component {
   constraints = null;
 
   boxWidth = 0;
-  maxZVelocity = 20;
+  maxZVelocity = 25;
 
   sizeup = () => {
     this.cvs.width = window.innerWidth;
@@ -144,7 +148,7 @@ export default class extends React.Component {
       var cpos = points[i].cpos;
       var ppos = points[i].ppos;
       var velz = cpos.z - ppos.z;
-      var hue = (velz / maxZVelocity) * 50 //Math.PI * 2;
+      var hue = (velz / maxZVelocity) * HUE_DEPTH //Math.PI * 2;
       var cameraZ = 1000;
 
       var distRatio = cpos.z / cameraZ;
@@ -171,7 +175,7 @@ export default class extends React.Component {
         && i !== points.length - 1
         && i !== points.length - pointCountX
       ) {
-        points[i].acel.z += ((maxZVelocity * Math.random()) - (maxZVelocity/2)) * 0.01
+        points[i].acel.z += ((maxZVelocity * Math.random()) - (maxZVelocity/2)) * 0251
       }
     }*/
 
@@ -278,7 +282,7 @@ function huemaster(gradations, s, l, a) {
   var hexes = [];
   var circle = gradations;
 
-  for (var i = 200; i < gradations; i++) {
+  for (var i = LOWER_BOUND_HUE; i < gradations; i++) {
     var h = (i/gradations) * circle;
     hexes.push( HSLtoRGB(h, s, l, a) );
   }
