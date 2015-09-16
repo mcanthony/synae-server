@@ -24,10 +24,14 @@ export default class extends React.Component {
   }
 
   motions = [];
+  now = Date.now();
+  prev = 0;
+  threshold = 4000;
 
   componentDidMount () {
 
     this.disconnectDeviceMotion = devicemotion((e) => {
+      this.now = Date.now();
       let { motions } = this;
       motions.unshift({
         acceleration: e.acceleration,
@@ -38,35 +42,19 @@ export default class extends React.Component {
         motions.pop();
       }
 
-      let recordedTime = {
-        x: [0],
-        y: [1,2,3,4,5,6,7,8,9,10,10,10,10,10,10,10,0,0,0,0,0,0],
-        z: [0]
-      }
+      let sumy = motions.reduce((sum, motion) => {
+        return sum + motion.acceleration.y;
+      }, 0);
 
-      let timeseries = motionsToAccelSeries(motions);
-      let gestureCost = dtwSum(timeseries, recordedTime);
+      let avgy = sumy / motions.length;
 
-      let still = [-1];
-      let stillCost = dtwSum(timeseries, { x: still, y: still, z: still });
+      dbg(`${avgy} average and sum ${sumy}`);
 
-      if (gestureCost < stillCost) {
-        dbg('dm cost: gesture', gestureCost);
-        dbg('dm cost: still', stillCost);
-        this.triggerSound();
-        // blank out to prevent immediate subsequent matches, hopefully?
-        motions.length = 0;
-        let dtw;
-        dtw = new DTW();
-        dtw.compute(timeseries.y, recordedTime.y, timeseries.length * 0.1)
-        let gesturePath = dtw.path();
-        dbg('\n' + asciiDTWPath(gesturePath, timeseries.y.length, recordedTime.y.length));
-        dbg('dtw gesture path', JSON.stringify(gesturePath));
-        dtw = new DTW();
-        dtw.compute(timeseries.y, still, timeseries.length * 0.1)
-        let stillPath = dtw.path();
-        dbg('\n' + asciiDTWPath(stillPath, timeseries.y.length, recordedTime.y.length));
-        dbg('dtw still path', JSON.stringify(stillPath));
+      if (avgy < -0.5) {
+        if (this.now - this.prev >= this.threshold) {
+          this.triggerSound();
+          this.prev = this.now;
+        }
       }
     });
 
@@ -107,6 +95,7 @@ export default class extends React.Component {
           height: '100%'
         }}>
           <h1 className='center'>{this.props.instructions}</h1>
+          <p>{this.state.playing}</p>
         </div>
       : <div><h1 style={{ textAlign: 'center' }}>Fetching...</h1></div>
   }
