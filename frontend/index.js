@@ -84,6 +84,12 @@ var perfConfig = {
           timings: [
             timeToMS(0, 37)
           ]
+        },
+        {
+          sequences: [
+            { gesture: 'silent',
+              instructions: 'Fin.' }
+          ]
         }
       ],
       activeSequence: 0,
@@ -137,6 +143,12 @@ var perfConfig = {
           ],
           timings: [
             timeToMS(0, 37)
+          ]
+        },
+        {
+          sequences: [
+            { gesture: 'silent',
+              instructions: 'Fin.' }
           ]
         }
       ],
@@ -194,6 +206,12 @@ var perfConfig = {
           timings: [
             timeToMS(0, 37)
           ]
+        },
+        {
+          sequences: [
+            { gesture: 'silent',
+              instructions: 'Fin.' }
+          ]
         }
       ],
       activeSequence: 0,
@@ -247,6 +265,12 @@ var perfConfig = {
           ],
           timings: [
             timeToMS(0, 37)
+          ]
+        },
+        {
+          sequences: [
+            { gesture: 'silent',
+              instructions: 'Fin.' }
           ]
         }
       ],

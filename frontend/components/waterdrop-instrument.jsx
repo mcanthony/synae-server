@@ -207,6 +207,9 @@ export default class extends React.Component {
   }
 
   touchClick = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+
     let x = e.changedTouches ? e.changedTouches[0].clientX : e.clientX;
     let y = e.changedTouches ? e.changedTouches[0].clientY : e.clientY;
 
