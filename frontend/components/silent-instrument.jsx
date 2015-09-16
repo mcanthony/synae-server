@@ -5,7 +5,7 @@ export default class extends React.Component {
     return <div>
       <h1 style={{
         textAlign: 'center',
-        marginTop: '45vh',
+        marginTop: '35vh',
         marginLeft: '10vw',
         marginRight: '10vw'
       }}>{this.props.instructions}</h1>
