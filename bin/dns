@@ -1,0 +1,61 @@
+#!/usr/bin/env node
+"use strict";
+
+var dns = require('native-dns');
+var debug = require('debug')('synae-dns');
+var tcpserver = dns.createTCPServer();
+var server = dns.createServer();
+
+var RHIZOME_HOST = process.env.RHIZOME_HOST || '192.168.1.220';
+
+debug('RHIZOME_HOST %s', RHIZOME_HOST);
+
+var onMessage = function (request, response) {
+  debug(request.question[0].name + ' from ' + request.address.address);
+
+  response.answer.push(dns.A({
+    name: request.question[0].name,
+    address: RHIZOME_HOST,
+    ttl: 600,
+  }));
+
+  //response.additional.push(dns.AAAA({
+  //  name: 'hostA.example.org',
+  //  address: '::1',
+  //  ttl: 600,
+  //}));
+
+  response.send();
+};
+
+var onError = function (err, buff, req, res) {
+  debug(err);
+};
+
+var onListening = function () {
+  debug('listening %o', this.address());
+};
+
+var onSocketError = function (err, socket) {
+  debug(err);
+};
+
+var onClose = function () {
+  debug('close %o', this.address());
+};
+
+server.on('request', onMessage);
+server.on('error', onError);
+server.on('listening', onListening);
+server.on('socketError', onSocketError);
+server.on('close', onClose);
+
+server.serve(53);
+
+tcpserver.on('request', onMessage);
+tcpserver.on('error', onError);
+tcpserver.on('listening', onListening);
+tcpserver.on('socketError', onSocketError);
+tcpserver.on('close', onClose);
+
+tcpserver.serve(53);

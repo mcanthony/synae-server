@@ -24,6 +24,14 @@ Running
   - browser: `localStorage.debug = '*'`
   - node: `DEBUG=*`
 
+Running in Production
+---------------------
+
+- `$ sudo HTTP_PORT=80 npm run server`
+- `$ sudo RHIZOME_HOST=192.168.1.220 npm run dns`
+- Ensure router has RHIZOME_HOST specified as DNS server
+- Connect to router, type `anything.com`
+
 Inspiration / Shameless Stealing
 --------------------------------
 

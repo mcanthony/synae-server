@@ -9,7 +9,8 @@
     "optimize": "uglifyjs --compress --mangle -- public/bundle.js > public/bundle.min.js && mv public/bundle.min.js public/bundle.js",
     "js-watch": "watchify -d -t [babelify --stage 0 --sourceMapRelative . ] frontend/index.js -o public/bundle.js -v",
     "server": "rhizome config.js",
-    "start": "npm run css && npm run js && npm run server",
+    "dns": "bin/dns",
+    "start": "npm run prod && npm run server",
     "convert": "mkdir -p public/audio/mp3; for file in public/audio/wav/*; do ffmpeg -i \"$file\" -codec:a libmp3lame -qscale:a 0 public/audio/mp3/`basename -s .wav \"$file\"`.mp3; done",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -28,6 +29,7 @@
     "dtw": "0.0.3",
     "es6-promise": "^3.0.2",
     "less": "^2.5.1",
+    "native-dns": "^0.7.0",
     "object-assign": "^4.0.1",
     "pocket-physics": "^2.6.1",
     "react": "^0.13.3",
