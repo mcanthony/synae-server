@@ -47,20 +47,7 @@ export default class extends React.Component {
     this.boxWidth = Math.floor(Math.min(this.cvs.width, this.cvs.height) / DENSITY);
   }
 
-  componentDidMount () {
-
-    let {actx} = this.props;
-    this.gain = actx.createGain();
-    this.gain.connect(actx.destination);
-    this.gain.value = 1;
-
-    binaryXHR(this.props.sample, (err, data) => {
-      actx.decodeAudioData(data, b => {
-        this.setState({ buffer: b, isLoading: false });
-        this.tick();
-      });
-    });
-
+  init() {
     let cvs = this.cvs = React.findDOMNode(this).querySelector('canvas');
     let ctx = this.ctx = cvs.getContext('2d');
 
@@ -134,6 +121,22 @@ export default class extends React.Component {
 
     //debugDrawConstraints(ctx, constraints);
     this.drawSquares();
+    this.tick();
+  }
+
+  componentDidMount () {
+
+    let {actx} = this.props;
+    this.gain = actx.createGain();
+    this.gain.connect(actx.destination);
+    this.gain.value = 1;
+
+    binaryXHR(this.props.sample, (err, data) => {
+      actx.decodeAudioData(data, b => {
+        this.setState({ buffer: b, isLoading: false });
+        this.init();
+      });
+    });
   }
 
   componentWillUnmount () {
@@ -248,7 +251,7 @@ export default class extends React.Component {
           top: '0px',
           left: '0px',
           right: '0px'
-        }}><h1 className='center'>{this.props.instructions}</h1></div>
+        }}><h1 onClick={this.touchClick} onTouchEnd={this.touchClick} className='center'>{this.props.instructions}</h1></div>
         </div>
       : <div><h1 style={{ textAlign: 'center' }}>Fetching...</h1></div>
   }
