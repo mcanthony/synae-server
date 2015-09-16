@@ -70,7 +70,11 @@ export default class extends React.Component {
     this.disconnectDeviceMotion();
   }
 
-  triggerSound = () => {
+  triggerSound = (e) => {
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
     let {actx} = this.props;
     let sample = actx.createBufferSource();
     sample.buffer = this.state.buffer;
@@ -81,11 +85,16 @@ export default class extends React.Component {
 
   render () {
     return this.state.buffer
-      ? <div style={{
-          backgroundImage: 'url(' + this.props.iconUrl + ')',
-          backgroundSize: '50%',
+      ? <div
+        onTouchStart={this.triggerSound}
+        onClick={this.triggerSound}
+        style={{
+          backgroundImage: ''
+            + 'url(img/TAP_GREEN.png),'
+            + 'url(' + this.props.iconUrl + ')',
+          backgroundSize: '40%, 50%',
           backgroundRepeat: 'no-repeat',
-          backgroundPosition: '50% 66%',
+          backgroundPosition: '50% 33%, 50% 76%',
           height: '100%'
         }}>
           <h1 className='center'>{this.props.instructions}</h1>
