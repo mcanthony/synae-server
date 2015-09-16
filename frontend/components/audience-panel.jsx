@@ -78,8 +78,17 @@ export default class AudiencePanel extends React.Component {
   render() {
     let hasKickedAudio = !!this.state.actx;
 
-    if (!hasKickedAudio) return <div>
-      <button className='button button-big' onClick={this.kickWebAudio}>Join!</button>
+    if (!hasKickedAudio) return <div style={{
+      paddingTop: '45vh',
+      textAlign: 'center'
+    }}>
+      <button
+        className='button button-big'
+        style={{
+          fontSize: '64px',
+          lineHeight: '64px'
+        }}
+        onClick={this.kickWebAudio}>Begin</button>
     </div>
 
     let self = this;
@@ -102,7 +111,9 @@ export default class AudiencePanel extends React.Component {
       <div className="audience">
         {
           !hasWorldData
-          ? <div>{syncing}</div>
+          ? <div>
+              <h1 style={{ textAlign: 'center' }}>{syncing}</h1>
+            </div>
           : group
             ? <div><Instrument
               sample={sequence.sample}

@@ -10,7 +10,8 @@ export default class extends React.Component {
   render() {
     return (
       <div className='flex flex-column'>
-        <h1 style={{maxHeight:'10vh'}}className='px2'>Where Are You?</h1>
+        <h1 style={{maxHeight:'10vh'}} className='px2'>Where Are You?</h1>
+        <div className='center'>Piano</div>
         <div className='flex'>
           <div style={{height: '35vh'}} className='flex-auto px2 py2'>
             <button

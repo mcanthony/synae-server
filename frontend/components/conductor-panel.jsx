@@ -35,8 +35,7 @@ export default class ConductorPanel extends React.Component {
     timingHasStarted: false,
     sectionTimers: {
       // will have group-id => timeoutid
-    },
-    masterActiveSection: 0
+    }
   }
 
   constructor(props) {

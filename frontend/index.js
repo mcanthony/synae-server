@@ -105,7 +105,7 @@ var perfConfig = {
         {
           sequences: [
             { gesture: 'silent',
-              instructions: 'Be still.' },
+              instructions: 'Be mindful of your surroundings (for now).' },
             { gesture: 'slash',
               sample: 'audio/mp3/Section_1_Group_2_String_Swipe.mp3',
               instructions: 'Slash downwards when you hear fluttering.',
@@ -159,7 +159,7 @@ var perfConfig = {
         {
           sequences: [
             { gesture: 'silent',
-              instructions: 'Be still.' },
+              instructions: 'Be mindful of your surroundings (for now).' },
             { gesture: 'scratch',
               sample: 'audio/mp3/Section_1_Group_3_String_Drag.mp3',
               instructions: 'Scratch the air when you hear slashing sounds',
@@ -215,7 +215,7 @@ var perfConfig = {
         {
           sequences: [
             { gesture: 'silent',
-              instructions: 'Be still.' },
+              instructions: 'Be mindful of your surroundings (for now).' },
             { gesture: 'reach',
               sample: 'audio/mp3/Section_1_Group_4_Whisper_bells.mp3',
               instructions: 'Reach upwards with your phone when you hear a dead spot.',

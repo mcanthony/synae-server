@@ -92,6 +92,6 @@ export default class extends React.Component {
         }}>
           <h1 className='center'>{this.props.instructions}</h1>
         </div>
-      : <div>Fetching...</div>
+      : <div><h1 style={{ textAlign: 'center' }}>Fetching...</h1></div>
   }
 }

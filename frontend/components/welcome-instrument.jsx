@@ -27,7 +27,8 @@ export default class extends React.Component {
       <ul>
         {step > 0 && <li>Make sure your Silent Switch is not on</li>}
         {step > 1 && <li>Enable Do Not Disturb if your phone has it</li>}
-        {step > 2 && <li><button
+        {step > 2 && <li>Turn up your volume</li>}
+        {step > 3 && <li><button
           class='button button-big'>Press and Listen for a Tone</button></li>}
       </ul>
     </div>

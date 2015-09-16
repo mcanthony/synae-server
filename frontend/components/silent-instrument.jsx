@@ -1,17 +1,14 @@
 import React from 'react/addons';
 
 export default class extends React.Component {
-
-  //static propTypes = {
-  //  sample: React.PropTypes.string.isRequired,
-  //  silence: React.PropTypes.func.isRequired
-  //}
-
-  //state = {
-  //  ...this.props
-  //}
-
   render () {
-    return <div>{this.props.instructions}</div>
+    return <div>
+      <h1 style={{
+        textAlign: 'center',
+        marginTop: '45vh',
+        marginLeft: '10vw',
+        marginRight: '10vw'
+      }}>{this.props.instructions}</h1>
+    </div>
   }
 }

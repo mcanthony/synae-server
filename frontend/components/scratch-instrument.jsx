@@ -28,14 +28,17 @@ export default class extends React.Component {
       let { motions } = this;
       e.timestamp = Date.now();
       motions.push(e);
-      if (motions.length > 32) motions.shift();
+      if (motions.length > 16) motions.shift();
       if (motions.length < 2) return;
 
-      let series = motionsLowPass(motions, 0.9);
+      let series = motionsLowPass(motions, 0.1);
       let ys = series.y;
-      let majorityAreNegative = ys.filter(y => y <= -0.2).length > ys.length / 2;
+      let majorityAreNegative = ys.filter(y => y <= -0.1).length > ys.length / 2;
 
-      if (motions.length > 20 && majorityAreNegative) {
+      let average = ys.reduce((sum, y) => { return sum += y }) / ys.length;
+
+      //if (motions.length > 5 && majorityAreNegative) {
+      if (average < -1) {
         dbg('majority');
         this.triggerSound();
         // blank out to prevent immediate subsequent matches, hopefully?
@@ -81,6 +84,6 @@ export default class extends React.Component {
         }}>
           <h1 className='center'>{this.props.instructions}</h1>
         </div>
-      : <div>Fetching...</div>
+      : <div><h1 style={{ textAlign: 'center' }}>Fetching...</h1></div>
   }
 }
