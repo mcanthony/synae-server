@@ -240,20 +240,24 @@ export default class extends React.Component {
   render () {
     return this.state.buffer
       ? <div style={{
-            backgroundImage: 'url(' + this.props.iconUrl + ')',
-            backgroundSize: '50%',
-            backgroundRepeat: 'no-repeat',
-            backgroundPosition: '50% 66%',
             height: '100%'
           }}>
         <canvas
           onTouchEnd={this.touchClick}
           onClick={this.touchClick}></canvas>
-        <div style={{
+        <div
+          onClick={this.touchClick}
+          onTouchEnd={this.touchClick}
+          style={{
           position: 'absolute',
           top: '0px',
           left: '0px',
-          right: '0px'
+          right: '0px',
+          bottom: '0px',
+          backgroundImage: 'url(' + this.props.iconUrl + ')',
+          backgroundSize: '50%',
+          backgroundRepeat: 'no-repeat',
+          backgroundPosition: '50% 66%'
         }}><h1 onClick={this.touchClick} onTouchEnd={this.touchClick} className='center'>{this.props.instructions}</h1></div>
         </div>
       : <div><h1 style={{ textAlign: 'center' }}>Fetching...</h1></div>

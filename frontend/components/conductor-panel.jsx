@@ -92,21 +92,26 @@ export default class ConductorPanel extends React.Component {
       });
     }
 
-    let catcher = e => {
-      console.error(e);
-    }
-
-    Promise.all([
-      new Promise((resolve, reject) => {
+    let blanker = () => {
+      return new Promise((resolve, reject) => {
         // Gross. Make a blank audio buffer to prevent premature audio changes.
         let duration = this.state.groups[0].sections[0].timings[0];
         let { sampleRate } = actx;
         let buffer = actx.createBuffer(1, duration, sampleRate);
         resolve(buffer);
-      }),
+      })
+    }
+
+    let catcher = e => {
+      console.error(e);
+    }
+
+    Promise.all([
+      blanker(),
       pbuffer('audio/mp3/Section_1.mp3'),
       pbuffer('audio/mp3/Section_2.mp3'),
-      pbuffer('audio/mp3/Section_3.mp3')
+      pbuffer('audio/mp3/Section_3.mp3'),
+      blanker()
     ])
     .catch(catcher)
     .then(args => {
