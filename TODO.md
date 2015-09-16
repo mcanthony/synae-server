@@ -22,9 +22,9 @@ TODO
 
 Routing
 
-- [ ] Setup static ip for laptop
-- [ ] Buy cert for playground, 192.168.1.220
-- [ ] investigate node-dns
+- [x] Setup static ip for laptop
+- [ ] ~~Buy cert for playground, 192.168.1.220~~
+- [x] investigate node-dns
 
 gestures:
 
