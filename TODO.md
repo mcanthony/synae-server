@@ -1,10 +1,12 @@
 TODO
 
-- [ ] Style "Be still" text (slient)
+- [x] Style "Be still" text (slient)
+- [x] Style "Fetching" text (loading each gesture)
 - [ ] Check on Rhizome static file serving: will large files destroy the server?
+- [ ] Add "message latency" to conductor and performer panels to measure how long a round trip from the server is costing
 - [x] audience groups -> grid + colors
 - [x] gesture images
-- [ ] JOIN button needs better styling
+- [x] JOIN button needs better styling
 - [x] Dark #333333 background?
 - [x] style gesture instruction text
 - [ ] create audio test intro page, instructions about silent switch + do not disturb + volume up
@@ -28,7 +30,6 @@ gestures:
 
 - [ ] make shift in your seat super sensitive
 - [x] instructions for water drops (B) and blowing bubbles (A)
-
-dtw:
-
+- [ ] normalize dtw scores by path length when comparing
+- [ ] train DTW using multiple gestures and MD-DTW
 - [ ] try normalizing accelerations?
