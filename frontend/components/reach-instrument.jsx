@@ -38,7 +38,7 @@ export default class extends React.Component {
         rotationRate: e.rotationRate,
         timestamp: Date.now()
       });
-      if (motions.length > 32) {
+      if (motions.length > 16) {
         motions.pop();
       }
 
@@ -50,10 +50,11 @@ export default class extends React.Component {
 
       dbg(`${avgy} average and sum ${sumy}`);
 
-      if (avgy < -0.5) {
+      if (avgy < -2) {
         if (this.now - this.prev >= this.threshold) {
           this.triggerSound();
           this.prev = this.now;
+          motions.length = 0;
         }
       }
     });
