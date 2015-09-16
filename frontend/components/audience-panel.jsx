@@ -65,7 +65,11 @@ export default class AudiencePanel extends React.Component {
     });
   }
 
-  kickWebAudio = () => {
+  kickWebAudio = (e) => {
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
     dbg('waakick');
     this.setState({ actx: waakick() });
   }
@@ -88,7 +92,8 @@ export default class AudiencePanel extends React.Component {
           fontSize: '64px',
           lineHeight: '64px'
         }}
-        onClick={this.kickWebAudio}>Begin</button>
+        onClick={this.kickWebAudio}
+        onTouchEnd={this.kickWebAudio}>Begin</button>
     </div>
 
     let self = this;
