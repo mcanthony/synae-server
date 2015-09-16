@@ -21,28 +21,34 @@ export default class extends React.Component {
   }
 
   motions = [];
+  throttle = 3000;
+  prev = 0;
 
   componentDidMount () {
 
     this.disconnectDeviceMotion = devicemotion((e) => {
       let { motions } = this;
       e.timestamp = Date.now();
-      motions.push(e);
-      if (motions.length > 16) motions.shift();
-      if (motions.length < 2) return;
+      //motions.push(e);
+      motions.unshift(e);
+      if (motions.length > 32) {
+        motions.pop();
+      }
 
-      let series = motionsLowPass(motions, 0.1);
-      let ys = series.y;
-      let majorityAreNegative = ys.filter(y => y <= -0.1).length > ys.length / 2;
+      // let series = motionsLowPass(motions, 0.1);
+      // let ys = series.y;
+      // let majorityAreNegative = ys.filter(y => y <= -0.1).length > ys.length / 2;
 
-      let average = ys.reduce((sum, y) => { return sum += y }) / ys.length;
+      //let average = ys.reduce((sum, y) => { return sum += y }) / ys.length;
+      let average = motions.reduce((sum, motion) => sum + motion.acceleration.y, 0) / motions.length;
 
       //if (motions.length > 5 && majorityAreNegative) {
-      if (average < -1) {
-        dbg('majority');
-        this.triggerSound();
-        // blank out to prevent immediate subsequent matches, hopefully?
-        motions.length = 0;
+      if (average > 1.8) {
+        if (e.timestamp - this.prev >= this.throttle) {
+          dbg(`match ${average}`);
+          this.triggerSound();
+          this.prev = e.timestamp;
+        }
       }
     });
 
@@ -51,7 +57,7 @@ export default class extends React.Component {
     this.gain.connect(actx.destination);
     this.gain.value = 1;
 
-    dbg(this.props.sample);
+    dbg(this.props.sample); 
 
     binaryXHR(this.props.sample, (err, data) => {
       actx.decodeAudioData(data, buffer => {
