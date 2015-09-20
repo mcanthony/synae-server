@@ -54,21 +54,26 @@ if (kinect.open()) {
     }
   })
   
+  var lastTriggerTime = Date.now();
+  
   gestures.onLeftGesture(function () {
-    console.log('\n[gesture] left up');
     if (send && sendLeft && !sendUpwards) {
+      console.log('\n[gesture] left up');
       client.send(kinectAddress, ['left']);
       sendLeft = false;
       sendUpwards = true;
+      lastTriggerTime = Date.now();
     }
   })
   
   gestures.onPointGesture(function () {
-    console.log('\n[gesture] point up');
-    if (send && sendUpwards && !sendLeft) {
+    var now = Date.now();
+    if (send && sendUpwards && !sendLeft && now - lastTriggerTime > 20000) {
+      console.log('\n[gesture] point up');
       client.send(kinectAddress, ['upwards-point']);
       sendLeft = false;
       sendUpwards = false;
+      lastTriggerTime = Date.now();
     }
   })
   
