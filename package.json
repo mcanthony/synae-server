@@ -14,6 +14,9 @@
     "convert": "mkdir -p public/audio/mp3; for file in public/audio/wav/*; do ffmpeg -i \"$file\" -codec:a libmp3lame -qscale:a 0 public/audio/mp3/`basename -s .wav \"$file\"`.mp3; done",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "engines": {
+    "node": "4.x"
+  },
   "author": "Drew Petersen <senofpeter@gmail.com>",
   "license": "MIT",
   "dependencies": {
