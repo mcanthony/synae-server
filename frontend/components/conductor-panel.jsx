@@ -52,12 +52,26 @@ export default class ConductorPanel extends React.Component {
       // Immediately send world state to resync in the event of a crash
       this.broadcastWorldState();
       this.rsend('/sys/subscribe', ['/kinect-events']);
+      this.rsend('/sys/subscribe', ['/performer-events']);
     });
 
     this.rrecv((address, args) => {
       if (address === '/broadcast/open/websockets') {
         return;
       }
+
+      if (address === '/performer-events') {
+        if (!this.state.buffers.length) return;
+
+        if (args[0] === 'next-section') {
+          this.nextSection();
+        }
+
+        if (args[0] === 'next-sequence') {
+          this.nextSequenceForAll();
+        }
+      }
+
       if (address === '/kinect-events') {
         if (
           !this.state.allowKinectInput
@@ -161,7 +175,7 @@ export default class ConductorPanel extends React.Component {
             dbg('special case: welcome');
             this.nextSection();
           } else {
-            this.nextSequence(g.id);
+            this.changeSequenceBy(g.id, 1);
           }
         }, duration);
       }
@@ -169,15 +183,42 @@ export default class ConductorPanel extends React.Component {
     this.setState(state);
   }
 
-  nextSequence (groupId) {
+  changeSequenceBy (groupId, plusOrMinus) {
     let { state } = this;
     state.groups.forEach(g => {
       if (g.id !== groupId) return;
-      let sequences = g.sections[g.activeSection].sequences;
-      if (g.activeSequence < sequences.length - 1) {
-        g.activeSequence += 1;
-        dbg('sequence change', g.id, g.activeSequence);
+
+      let section = g.sections[g.activeSection]
+      let { sequences } = section;
+
+      dbg('sequence change', g.id, g.activeSequence);
+
+      g.activeSequence += plusOrMinus;
+
+      if (g.activeSequence > sequences.length - 1) {
+        g.activeSequence = 0;
+        g.activeSection += 1;
       }
+
+      if (g.activeSequence < 0) {
+        g.activeSequence = 0;
+        g.activeSection -= 1;
+      }
+
+      if (
+        g.activeSection > g.sections.length - 1
+        || g.activeSection < 0
+      ) {
+        g.activeSection = 0;
+      }
+    });
+    this.setState(state);
+  }
+
+  nextSequenceForAll () {
+    let { state } = this;
+    state.groups.forEach(g => {
+      this.changeSequenceBy(g.id, 1);
     });
     this.setState(state);
   }
@@ -215,27 +256,6 @@ export default class ConductorPanel extends React.Component {
     this.setupTimings();
   }
 
-  onEmitGroupSequenceChange = (e) => {
-    var action = e.target.getAttribute('data-action');
-    var groupId = e.target.getAttribute('data-groupid');
-    var add = action === 'dec' ? -1 : 1;
-    var state = this.state;
-    state.groups.forEach(g => {
-      if (g.id === groupId) {
-        // Bounds check.
-        let section = g.sections[g.activeSection];
-        if (++g.activeSequence > section.sequences.length - 1) {
-          g.activeSequence = 0;
-          g.activeSection += 1;
-        }
-        if (g.activeSection > g.sections.length - 1) {
-          g.activeSection = 0;
-        }
-      }
-    });
-    this.setState(state);
-  }
-
   toggleKinect = () => {
     this.setState({ allowKinectInput: !this.state.allowKinectInput });
   }
@@ -245,7 +265,6 @@ export default class ConductorPanel extends React.Component {
     this.broadcastWorldState();
   }
 
-  // TODO: make this only happen when a new client connects?
   broadcastWorldState = () => {
     this.rsend('/world-state', [JSON.stringify(this.state)]);
   }
@@ -290,14 +309,14 @@ export default class ConductorPanel extends React.Component {
             return (
               <div className="group-info">
                 <h2>Group {g.name}: {gesture} (Section {g.activeSection}, Sequence {g.activeSequence})</h2>
-                <button name="group-sequence-dec"
-                  onClick={this.onEmitGroupSequenceChange}
-                  data-groupid={g.id}
-                  data-action="dec">Prev Sequence</button>
-                <button name="group-sequence-inc"
-                  onClick={this.onEmitGroupSequenceChange}
-                  data-groupid={g.id}
-                  data-action="inc">Next Sequence</button>
+                <button
+                  name="group-sequence-dec"
+                  onClick={this.changeSequenceBy.bind(this, g.id, -1)}
+                  >Prev Sequence</button>
+                <button
+                  name="group-sequence-inc"
+                  onClick={this.changeSequenceBy.bind(this, g.id, 1)}
+                  >Next Sequence</button>
               </div>
             )
           })}
