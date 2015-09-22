@@ -17,7 +17,8 @@ exports.servers = [
   {
     type: 'websockets',
     config: {
-      port: HTTP_PORT
+      port: HTTP_PORT,
+      maxSockets: 350
     }
   }
 ]
