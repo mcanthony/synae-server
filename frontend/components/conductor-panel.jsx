@@ -108,9 +108,9 @@ export default class ConductorPanel extends React.Component {
 
     Promise.all([
       blanker(),
-      pbuffer('audio/wav/Section_1.wav'),
-      pbuffer('audio/wav/Section_2_louder.wav'),
-      pbuffer('audio/wav/Section_3.wav'),
+      pbuffer('audio/mp3/Section_1.mp3'),
+      pbuffer('audio/mp3/Section_2_louder.mp3'),
+      pbuffer('audio/mp3/Section_3.mp3'),
       blanker()
     ])
     .catch(catcher)
