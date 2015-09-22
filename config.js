@@ -4,7 +4,7 @@ var path = require('path')
 var storeDir = path.join(__dirname, 'tmp');
 if (!fs.existsSync(storeDir)) fs.mkdirSync(storeDir);
 
-var HTTP_PORT = parseInt(process.env.HTTP_PORT,10) || 8080;
+var HTTP_PORT = parseInt(process.env.PORT,10) || 8080;
 
 exports.servers = [
   {
