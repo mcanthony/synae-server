@@ -8,7 +8,7 @@
     "prod": "npm run css && NODE_ENV=production npm run js && npm run optimize",
     "optimize": "uglifyjs --compress --mangle -- public/bundle.js > public/bundle.min.js && mv public/bundle.min.js public/bundle.js",
     "js-watch": "watchify -d -t [babelify --stage 0 --sourceMapRelative . ] frontend/index.js -o public/bundle.js -v",
-    "server": "bin/rhizome-custom config.js",
+    "server": "rhizome config.js",
     "dns": "bin/dns",
     "start": "npm run prod && DEBUG=* npm run server",
     "convert": "mkdir -p public/audio/mp3; for file in public/audio/wav/*; do ffmpeg -i \"$file\" -codec:a libmp3lame -qscale:a 0 public/audio/mp3/`basename -s .wav \"$file\"`.mp3; done",
