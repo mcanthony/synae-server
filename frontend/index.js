@@ -47,14 +47,14 @@ var perfConfig = {
         {
           sequences: [
             { gesture: 'flutter',
-              sample: 'audio/mp3/Section_1_Group_1_flutter.mp3',
+              sample: 'audio/mp3/flutter.mp3',
               instructions: 'Shake phone when you hear agitation in the piano.',
-              iconUrl: 'img/SECTION1-ShakeGroup1.png',
+              iconUrl: 'img/SHAKE_BLUE.png',
               minimumForce: 10},
             { gesture: 'flutter',
-              sample: 'audio/mp3/Section_1_Group_1_flutter.mp3',
+              sample: 'audio/mp3/flutter.mp3',
               instructions: 'When you hear someone else\'s shake, wait two beats then shake.',
-              iconUrl: 'img/SECTION1-ShakeGroup1.png',
+              iconUrl: 'img/SHAKE_BLUE.png',
               minimumForce: 10},
           ],
           timings: [
@@ -64,21 +64,21 @@ var perfConfig = {
         {
           sequences: [
             { gesture: 'tickle',
-              sample: 'audio/mp3/Section_2_Group_1_blowing_bubbles.mp3',
+              sample: 'audio/mp3/blowing_bubbles.mp3',
               instructions: 'Tickle bubbles when you grandly exhale.',
-              iconUrl: 'img/SECTION2-TickleGroup1.png'}
+              iconUrl: 'img/TICKLETAP_BLUE.png'}
           ]
         },
         {
           sequences: [
             { gesture: 'tickle',
-              sample: 'audio/mp3/Section_2_Group_1_blowing_bubbles.mp3',
+              sample: 'audio/mp3/blowing_bubbles.mp3',
               instructions: 'Tickle screen\'s bubbles whenever you grandly exhale.',
-              iconUrl: 'img/SECTION2-TickleGroup1.png'},
+              iconUrl: 'img/TICKLETAP_BLUE.png'},
             { gesture: 'flutter',
-              sample: 'audio/mp3/Section_3_Group_1_Electrical_E.mp3',
+              sample: 'audio/mp3/electrical_e.mp3',
               instructions: 'Shake phone after pianist performs a gesture.',
-              iconUrl: 'img/SECTION3-ShakeGroupERRYBODY.png',
+              iconUrl: 'img/SHAKE_BLUE.png',
               minimumForce: 10}
           ],
           timings: [
@@ -113,9 +113,9 @@ var perfConfig = {
             { gesture: 'silent',
               instructions: 'Be mindful of your surroundings (for now).' },
             { gesture: 'slash',
-              sample: 'audio/mp3/Section_1_Group_2_String_Swipe.mp3',
+              sample: 'audio/mp3/string_swipe.mp3',
               instructions: 'Slash downwards when you hear fluttering.',
-              iconUrl: 'img/SECTION1-SlashGroup2.png'}
+              iconUrl: 'img/SLASH_RED.png'}
           ],
           timings: [
             timeToMS(0, 42)
@@ -124,21 +124,21 @@ var perfConfig = {
         {
           sequences: [
             { gesture: 'waterdrop',
-              sample: 'audio/mp3/Section_2_Group_2_Water_drop___saliva.mp3',
+              sample: 'audio/mp3/water_drop.mp3',
               instructions: 'Tap when you swallow saliva.',
-              iconUrl: 'img/SECTION2-TapGroup2.png'}
+              iconUrl: 'img/TAP_RED.png'}
           ]
         },
         {
           sequences: [
             { gesture: 'waterdrop',
-              sample: 'audio/mp3/Section_2_Group_2_Water_drop___saliva.mp3',
+              sample: 'audio/mp3/water_drop.mp3',
               instructions: 'Tap when you swallow saliva.',
-              iconUrl: 'img/SECTION2-TapGroup2.png'},
+              iconUrl: 'img/TAP_RED.png'},
             { gesture: 'flutter',
-              sample: 'audio/mp3/Section_3_Group_2_Electrical_Csharp.mp3',
+              sample: 'audio/mp3/electrical_csharp.mp3',
               instructions: 'Shake phone after the group on your right plays sounds.',
-              iconUrl: 'img/SECTION3-ShakeGroupERRYBODY.png',
+              iconUrl: 'img/SHAKE_RED.png',
               minimumForce: 10}
           ],
           timings: [
@@ -173,9 +173,9 @@ var perfConfig = {
             { gesture: 'silent',
               instructions: 'Be mindful of your surroundings (for now).' },
             { gesture: 'scratch',
-              sample: 'audio/mp3/Section_1_Group_3_String_Drag.mp3',
+              sample: 'audio/mp3/string_drag.mp3',
               instructions: 'Scratch the air when you hear slashing sounds',
-              iconUrl: 'img/SECTION1-ScratchGroup3.png'}
+              iconUrl: 'img/SCRATCH_GREEN.png'}
           ],
           timings: [
             timeToMS(0, 42)
@@ -184,23 +184,23 @@ var perfConfig = {
         {
           sequences: [
             { gesture: 'flutter',
-              sample: 'audio/mp3/Section_2_Group_3_Electrical_interruption.mp3',
+              sample: 'audio/mp3/electrical_interruption.mp3',
               instructions: 'Shake phone quickly whenever you shift in your seat.',
-              iconUrl: 'img/SECTION2-ShakeGroup3.png',
+              iconUrl: 'img/SHAKE_GREEN.png',
               minimumForce: 5}
           ]
         },
         {
           sequences: [
             { gesture: 'flutter',
-              sample: 'audio/mp3/Section_2_Group_3_Electrical_interruption.mp3',
+              sample: 'audio/mp3/electrical_interruption.mp3',
               instructions: 'Shake phone quickly whenever you shift in your seat.',
-              iconUrl: 'img/SECTION2-ShakeGroup3.png',
+              iconUrl: 'img/SHAKE_GREEN.png',
               minimumForce: 5},
             { gesture: 'flutter',
-              sample: 'audio/mp3/Section_3_Group_3_Electrical_interruption.mp3',
+              sample: 'audio/mp3/electrical_interruption.mp3',
               instructions: 'Shake phone after the group in front of you plays sounds.',
-              iconUrl: 'img/SECTION3-ShakeGroupERRYBODY.png',
+              iconUrl: 'img/SHAKE_GREEN.png',
               minimumForce: 10}
           ],
           timings: [
@@ -235,9 +235,9 @@ var perfConfig = {
             { gesture: 'silent',
               instructions: 'Be mindful of your surroundings (for now).' },
             { gesture: 'reach',
-              sample: 'audio/mp3/Section_1_Group_4_Whisper_bells.mp3',
+              sample: 'audio/mp3/whisper_bells.mp3',
               instructions: 'Reach upwards with your phone when you hear a dead spot.',
-              iconUrl: 'img/SECTION1-ReachGroup4.png' }
+              iconUrl: 'img/REACH_YELLOW.png' }
           ],
           timings: [
             timeToMS(0, 42)
@@ -246,21 +246,21 @@ var perfConfig = {
         {
           sequences: [
             { gesture: 'waterdrop',
-              sample: 'audio/mp3/Section_2_Group_4_Popping.mp3',
+              sample: 'audio/mp3/popping.mp3',
               instructions: 'Tap when you swallow saliva.',
-              iconUrl: 'img/SECTION2-TapGroup4.png'}
+              iconUrl: 'img/TAP_YELLOW.png'}
           ]
         },
         {
           sequences: [
             { gesture: 'waterdrop',
-              sample: 'audio/mp3/Section_2_Group_4_Popping.mp3',
+              sample: 'audio/mp3/popping.mp3',
               instructions: 'Tap when you swallow saliva.',
-              iconUrl: 'img/SECTION2-TapGroup4.png'},
+              iconUrl: 'img/TAP_YELLOW.png'},
             { gesture: 'flutter',
-              sample: 'audio/mp3/Section_3_Group_4_Electrical_fly.mp3',
+              sample: 'audio/mp3/electrical_fly.mp3',
               instructions: 'Shake phone after the group to your left plays sounds.',
-              iconUrl: 'img/SECTION3-ShakeGroupERRYBODY.png',
+              iconUrl: 'img/SHAKE_YELLOW.png',
               minimumForce: 10}
           ],
           timings: [
