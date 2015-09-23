@@ -18,6 +18,8 @@ Object.assign = Object.assign || objectAssign;
 let dbg = debug('synae-server:client');
 let dbgm = debug('synae-server:messages');
 
+window.navigator.oscpu = window.navigator.oscpu || window.navigator.platform;
+
 // rhizome is a global provided by the server, unfortunately.
 // It could be replaced with:
 // var rhizome = require('rhizome-server/lib/websockets/browser-main');
@@ -402,6 +404,13 @@ if (!rhizome.isSupported()) {
 
 rhizome.start(() => {
   dbg('started', rhizome.id);
+
+  // Phone home to be able to troubleshoot afterwards.
+  const xhr = new XMLHttpRequest();
+  const url = window.location.origin + '/rhizome-identify?id=' + rhizome.id;
+  xhr.open('GET', url, true);
+  xhr.send(null);
+
   initialize();
 });
 

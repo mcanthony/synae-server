@@ -27,24 +27,28 @@ var path = require('path')
   , serveStatic = require('serve-static')
   , clc = require('cli-color')
   , expect = require('chai').expect
-  , version = require('../package.json').version
-  , websockets = require('../lib/websockets')
-  , osc = require('../lib/osc')
-  , connections = require('../lib/connections')
-  , coreUtils = require('../lib/core/utils')
-  , coreValidation = require('../lib/core/validation')
-  , starter = require('../lib/core/starter')
-  , errors = require('../lib/core/errors')
-  , utils = require('./utils')
+  , version = require('rhizome-server/package.json').version
+  , websockets = require('rhizome-server/lib/websockets')
+  , osc = require('rhizome-server/lib/osc')
+  , connections = require('rhizome-server/lib/connections')
+  , coreUtils = require('rhizome-server/lib/core/utils')
+  , coreValidation = require('rhizome-server/lib/core/validation')
+  , starter = require('rhizome-server/lib/core/starter')
+  , errors = require('rhizome-server/lib/core/errors')
+  , utils = require('rhizome-server/bin/utils')
 
 console.log(clc.bold('rhizome ' + version) )
 
 var HTTPServer = function(config) {
   this._config = config
+
+  var logPath = this._config.logDir + '/access.log';
+  var logStream = fs.createWriteStream(logPath, {flags: 'a'});
+
   this._app = express()
   this._httpServer = require('http').createServer(this._app)
   this._app.set('port', this._config.port)
-  this._app.use(morgan('combined', { skip: function (req, res) { return res.statusCode < 400 } }))
+  this._app.use(morgan('combined', { stream: logStream }))
   this._app.use('/rhizome', serveStatic(buildDir))
   this._app.use('/', serveStatic(this._config.staticDir))
 }
@@ -67,6 +71,14 @@ _.extend(HTTPServer.prototype, coreValidation.ValidateConfigMixin, {
       // Make sure `staticDir` ends with no /
       if (_.last(val) === '/')
         val = this.staticDir = val.slice(0, -1)
+      coreUtils.validateDirExists(val, doneDirName)
+    },
+    logDir: function(val, doneDirName) {
+      expect(val).to.be.a('string')
+      val = this.logDir = path.resolve(this.logDir)
+      // Make sure `logDir` ends with no /
+      if (_.last(val) === '/')
+        val = this.logDir = val.slice(0, -1)
       coreUtils.validateDirExists(val, doneDirName)
     }
   })

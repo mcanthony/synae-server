@@ -11,7 +11,8 @@ exports.servers = [
     type: 'http',
     config: {
       port: HTTP_PORT,
-      staticDir: path.join(__dirname, 'public')
+      staticDir: path.join(__dirname, 'public'),
+      logDir: storeDir
     }
   },
   {
