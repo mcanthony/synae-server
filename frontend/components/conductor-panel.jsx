@@ -198,11 +198,13 @@ export default class ConductorPanel extends React.Component {
       if (g.activeSequence > sequences.length - 1) {
         g.activeSequence = 0;
         g.activeSection += 1;
+        this.xfader.fadeTo(g.activeSection);
       }
 
       if (g.activeSequence < 0) {
         g.activeSequence = 0;
         g.activeSection -= 1;
+        this.xfader.fadeTo(g.activeSection);
       }
 
       if (
@@ -210,6 +212,7 @@ export default class ConductorPanel extends React.Component {
         || g.activeSection < 0
       ) {
         g.activeSection = 0;
+        this.xfader.fadeTo(g.activeSection);
       }
     });
     this.setState(state);
@@ -234,7 +237,7 @@ export default class ConductorPanel extends React.Component {
       }
     });
 
-    let activeSection = this.state.groups[0].activeSection;
+    let activeSection = state.groups[0].activeSection;
     this.xfader.fadeTo(activeSection);
     this.setState(state);
     this.setupTimings();
@@ -250,7 +253,7 @@ export default class ConductorPanel extends React.Component {
         g.activeSection = 0;
       }
     });
-    let activeSection = this.state.groups[0].activeSection;
+    let activeSection = state.groups[0].activeSection;
     this.xfader.fadeTo(activeSection);
     this.setState(state);
     this.setupTimings();
