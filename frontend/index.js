@@ -290,8 +290,21 @@ try {
   throw e;
 }
 
+// Test for older iOS, since rhizome.isSupported is failing for iOS 7.
+const reIOS = /iPhone OS (\d)_(\d) like/;
+const match = reIOS.exec(window.navigator.userAgent);
+if (match && match.length === 3) {
+  const major = parseInt(match[1],10);
+  const minor = parseInt(match[2],10);
+  if (major < 8) {
+    const e = new Error('Sorry, but iOS devices before iOS 8 are not supported.');
+    alert(e.message);
+    throw e;
+  }
+}
+
 if (!rhizome.isSupported()) {
-  let e = new Error('rhizome is not supported here');
+  let e = new Error('Sorry, but your device is not supported.');
   alert(e.message);
   throw e;
 }
