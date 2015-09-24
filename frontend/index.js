@@ -18,7 +18,9 @@ Object.assign = Object.assign || objectAssign;
 let dbg = debug('synae-server:client');
 let dbgm = debug('synae-server:messages');
 
+try {
 window.navigator.oscpu = window.navigator.oscpu || window.navigator.platform;
+} catch (e) {}
 
 // rhizome is a global provided by the server, unfortunately.
 // It could be replaced with:
