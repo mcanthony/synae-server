@@ -43,6 +43,9 @@ export default class ConductorPanel extends React.Component {
 
     // Prevent overloading the network.
     this.broadcastWorldState = debounce(this.broadcastWorldState, 20);
+    // This is such a super HACK to prevent race conditions with storing
+    // the sequence state individually but mutating as a whole.
+    this.setupTimings = debounce(this.setupTimings, 20);
 
     // Shortcuts to rhizome callbacks
     let {rsend, rrecv, rconnected} = this.props;
@@ -158,7 +161,7 @@ export default class ConductorPanel extends React.Component {
     param.linearRampToValueAtTime(0, now + 0.1);
   }
 
-  setupTimings () {
+  setupTimings = () => {
     let { state } = this;
     state.groups.forEach(g => {
       let section = g.sections[g.activeSection];
@@ -216,6 +219,7 @@ export default class ConductorPanel extends React.Component {
       }
     });
     this.setState(state);
+    this.setupTimings();
   }
 
   nextSequenceForAll () {
