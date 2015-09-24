@@ -107,7 +107,7 @@ var perfConfig = {
               minimumForce: 10}
           ],
           timings: [
-            timeToMS(0, 37)
+            timeToMS(0, 15)
           ]
         },
         {
@@ -188,7 +188,7 @@ var perfConfig = {
               minimumForce: 10}
           ],
           timings: [
-            timeToMS(0, 37)
+            timeToMS(0, 15)
           ]
         },
         {
@@ -272,7 +272,7 @@ var perfConfig = {
               minimumForce: 10}
           ],
           timings: [
-            timeToMS(0, 37)
+            timeToMS(0, 15)
           ]
         },
         {
@@ -355,7 +355,7 @@ var perfConfig = {
               minimumForce: 10}
           ],
           timings: [
-            timeToMS(0, 37)
+            timeToMS(0, 15)
           ]
         },
         {
