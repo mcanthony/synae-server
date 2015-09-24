@@ -408,10 +408,10 @@ rhizome.start(() => {
   dbg('started', rhizome.id);
 
   // Phone home to be able to troubleshoot afterwards.
-  const xhr = new XMLHttpRequest();
-  const url = window.location.origin + '/rhizome-identify?id=' + rhizome.id;
-  xhr.open('GET', url, true);
-  xhr.send(null);
+  //const xhr = new XMLHttpRequest();
+  //const url = window.location.origin + '/rhizome-identify?id=' + rhizome.id;
+  //xhr.open('GET', url, true);
+  //xhr.send(null);
 
   initialize();
 });
