@@ -4,12 +4,19 @@
   "description": "a kinectv2 application without c++ bitches",
   "main": "index.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "js": "browserify -d -t [babelify --stage 0 --sourceMapRelative . ] body-energy.js -o bundle.js",
+    "js-watch": "watchify -d -t [babelify --stage 0 --sourceMapRelative . ] body-energy.js -o bundle.js -v"
   },
   "author": "Alex Petersen <theoperatore@gmail.com>",
   "license": "MIT",
   "dependencies": {
     "kinect2": "0.0.29",
     "rhizome-server": "^0.7.0"
+  },
+  "devDependencies": {
+    "babelify": "^6.3.0",
+    "browserify": "^11.2.0",
+    "watchify": "^3.4.0"
   }
 }
